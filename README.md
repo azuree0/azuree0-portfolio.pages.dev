@@ -34,26 +34,19 @@ git branch -M main
 git push -u origin main
 ```
 
-**Deploy to Render**
-
-1. Push code to GitHub
-2. Sign up at https://render.com
-3. New → Web Service → Connect repo
-4. Render auto-detects `render.yaml` (Docker)
-5. Deploy; site at `https://portfolio.onrender.com`
-6. CMD ["nginx", "-g", "daemon off;"]
-
 **Deploy to Cloudflare Pages (free)**
 
-1. Push code to GitHub.
-2. Sign up at https://dash.cloudflare.com and get:
-   - **Account ID**: Dashboard → right sidebar (under "API").
-   - **API token**: My Profile → API Tokens → Create Token → "Edit Cloudflare Workers" template, then add "Cloudflare Pages — Edit" (or use "Custom token" with Account + Cloudflare Pages Edit).
-3. In the repo: **Settings → Secrets and variables → Actions** → New repository secret:
+- **Workers & Pages**: https://dash.cloudflare.com/f1eeae10e7537ebbaef3bc34f93ab59d/workers-and-pages
+- **Builds (MCP)**: https://builds.mcp.cloudflare.com/mcp
+
+1. In Cloudflare: **Workers & Pages** → **Create** → **Pages** → **Connect to Git** (optional). For this repo, use **Direct Upload** so GitHub Actions does the build:
+   - **Create project** → **Direct Upload** → name: `portfolio` (must match workflow `--project-name=portfolio`). Skip upload; the first push will deploy.
+2. Get credentials: Dashboard → **Account ID** (right sidebar); **My Profile** → **API Tokens** → Create Token → use "Edit Cloudflare Workers" + "Cloudflare Pages — Edit" (or Custom: Account + Pages Edit).
+3. In the repo: **Settings** → **Secrets and variables** → **Actions** → New repository secret:
    - `CLOUDFLARE_ACCOUNT_ID` = your Account ID
    - `CLOUDFLARE_API_TOKEN` = your API token
-4. Push to `main` (or `master`). The workflow builds with Trunk and deploys to Cloudflare Pages.
-5. Site will be at `https://portfolio.pages.dev` (or the URL shown in Cloudflare Dashboard → Pages → portfolio).
+4. Push to `main` (or `master`). The workflow builds with Trunk and deploys `dist/` to Cloudflare Pages.
+5. Site at `https://portfolio.pages.dev` (or the URL in **Workers & Pages** → **portfolio**). Optionally add a custom domain there.
 
 # Function
 
