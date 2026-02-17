@@ -213,7 +213,7 @@ body.is-touch {
   letter-spacing: 0.1em;
   overflow: hidden;
   white-space: nowrap;
-  animation: hero-reveal-h 0.25s ease-out both;
+  animation: hero-reveal-h 0.8s ease-out both;
 }
 
 .hero-tagline {
@@ -223,7 +223,7 @@ body.is-touch {
   margin-top: 0.5rem;
   overflow: hidden;
   white-space: nowrap;
-  animation: hero-reveal-h 0.25s ease-out 0.08s both;
+  animation: hero-reveal-h 0.8s ease-out 0.3s both;
 }
 
 .hero-email {
@@ -278,13 +278,13 @@ body.is-touch {
 /* Scroll-triggered horizontal reveal for repo cards */
 .scroll-reveal {
   overflow: hidden;
-  animation: hero-reveal-h 0.25s ease-out 0.1s both;
+  animation: hero-reveal-h 0.8s ease-out 0.5s both;
 }
 
 /* Scroll-driven: all cards reveal when they enter viewport (Chrome 115+, Safari 26+) */
 @supports (animation-timeline: view()) {
   .scroll-reveal {
-    animation: hero-reveal-h 0.25s ease-out both;
+    animation: hero-reveal-h 0.8s ease-out both;
     animation-timeline: view();
     animation-range: entry 0% entry 60%;
   }
