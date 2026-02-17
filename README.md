@@ -21,6 +21,19 @@ trunk build --release
 trunk serve
 ```
 
+**Git**
+
+```
+git init
+git add .
+git commit -m "Add Render deployment"
+git config --global user.email "your-email@example.com"
+git config --global user.name "Your Name"
+git remote add origin https://github.com/yourusername/portfolio.git
+git push -u origin main
+```
+
+
 **Deploy to Render**
 
 1. Push code to GitHub

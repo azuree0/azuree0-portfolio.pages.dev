@@ -4,8 +4,11 @@ use crate::scene::Scene3d;
 use gloo_events::EventListener;
 use gloo_timers::callback::Interval;
 use std::rc::Rc;
+use wasm_bindgen_futures::JsFuture;
 use web_sys::window;
 use yew::prelude::*;
+
+const EMAIL: &str = "azure.ad@yahoo.com";
 
 #[function_component(App)]
 pub fn app() -> Html {
@@ -61,6 +64,17 @@ pub fn app() -> Html {
         });
     }
 
+    let copy_email = Callback::from(move |_: MouseEvent| {
+        if let Some(w) = window() {
+            let clipboard = w.navigator().clipboard();
+            let email = EMAIL.to_string();
+            wasm_bindgen_futures::spawn_local(async move {
+                let promise = clipboard.write_text(&email);
+                let _ = JsFuture::from(promise).await;
+            });
+        }
+    });
+
     html! {
         <>
             <Scene3d />
@@ -71,6 +85,11 @@ pub fn app() -> Html {
                 <main class="content">
                     <RepoGrid repos={(*repos).clone()} />
                 </main>
+                <footer class="overlay-footer">
+                    <button type="button" class="hero-email" onclick={copy_email} title="Copy email">
+                        {EMAIL}
+                    </button>
+                </footer>
             </div>
         </>
     }

@@ -11,13 +11,9 @@ pub struct RepoGridProps {
 pub fn repo_grid(props: &RepoGridProps) -> Html {
     html! {
         <section class="repo-grid">
-            {props.repos.iter().enumerate().map(|(i, repo)| {
-                let is_first = i == 0;
+            {props.repos.iter().map(|repo| {
                 html! {
-                    <div
-                        key={repo.name.clone()}
-                        class={if is_first { "scroll-reveal scroll-reveal--first" } else { "scroll-reveal" }}
-                    >
+                    <div key={repo.name.clone()} class="scroll-reveal">
                         <RepoCard repo={repo.clone()} />
                     </div>
                 }

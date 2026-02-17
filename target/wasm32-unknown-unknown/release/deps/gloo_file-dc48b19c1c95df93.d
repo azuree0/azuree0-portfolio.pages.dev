@@ -1,0 +1,11 @@
+C:\Users\Azure\Documents\Axiom\Rust\Portfolio\target\wasm32-unknown-unknown\release\deps\gloo_file-dc48b19c1c95df93.d: C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-file-0.2.3\src\lib.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-file-0.2.3\src\blob.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-file-0.2.3\src\file_list.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-file-0.2.3\src\file_reader.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-file-0.2.3\src\object_url.rs
+
+C:\Users\Azure\Documents\Axiom\Rust\Portfolio\target\wasm32-unknown-unknown\release\deps\libgloo_file-dc48b19c1c95df93.rlib: C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-file-0.2.3\src\lib.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-file-0.2.3\src\blob.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-file-0.2.3\src\file_list.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-file-0.2.3\src\file_reader.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-file-0.2.3\src\object_url.rs
+
+C:\Users\Azure\Documents\Axiom\Rust\Portfolio\target\wasm32-unknown-unknown\release\deps\libgloo_file-dc48b19c1c95df93.rmeta: C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-file-0.2.3\src\lib.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-file-0.2.3\src\blob.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-file-0.2.3\src\file_list.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-file-0.2.3\src\file_reader.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-file-0.2.3\src\object_url.rs
+
+C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-file-0.2.3\src\lib.rs:
+C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-file-0.2.3\src\blob.rs:
+C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-file-0.2.3\src\file_list.rs:
+C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-file-0.2.3\src\file_reader.rs:
+C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-file-0.2.3\src\object_url.rs:

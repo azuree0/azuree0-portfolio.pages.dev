@@ -1,0 +1,7 @@
+C:\Users\Azure\Documents\Axiom\Rust\Portfolio\target\wasm32-unknown-unknown\release\deps\gloo_dialogs-e9372f8db5e96ca8.d: C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-dialogs-0.1.1\src\lib.rs
+
+C:\Users\Azure\Documents\Axiom\Rust\Portfolio\target\wasm32-unknown-unknown\release\deps\libgloo_dialogs-e9372f8db5e96ca8.rlib: C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-dialogs-0.1.1\src\lib.rs
+
+C:\Users\Azure\Documents\Axiom\Rust\Portfolio\target\wasm32-unknown-unknown\release\deps\libgloo_dialogs-e9372f8db5e96ca8.rmeta: C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-dialogs-0.1.1\src\lib.rs
+
+C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-dialogs-0.1.1\src\lib.rs:

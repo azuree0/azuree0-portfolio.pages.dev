@@ -1,8 +1,27 @@
+# Gzip compression
+gzip on;
+gzip_vary on;
+gzip_min_length 256;
+gzip_proxied any;
+gzip_types text/plain text/css text/javascript application/javascript application/wasm application/json;
+
 server {
     listen ${PORT};
     server_name localhost;
     root /usr/share/nginx/html;
     index index.html;
+
+    # Cache static assets (WASM, JS, CSS) - 1 year (hashed filenames)
+    location ~* \.(wasm|js|css)$ {
+        try_files $uri =404;
+        add_header Cache-Control "public, max-age=31536000, immutable";
+    }
+
+    # HTML: short cache, always revalidate
+    location = /index.html {
+        add_header Cache-Control "public, max-age=0, must-revalidate";
+    }
+
     location / {
         try_files $uri $uri/ /index.html;
     }
