@@ -1,5 +1,5 @@
-# Build stage: Rust + Trunk for WASM
-FROM rust:1.82-bookworm AS build
+# Build stage: Rust + Trunk for WASM (Rust 1.85+ required for trunk's edition2024 deps)
+FROM rust:latest AS build
 WORKDIR /app
 
 # Install trunk and wasm target
