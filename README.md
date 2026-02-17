@@ -41,7 +41,6 @@ git push -u origin main
 3. New → Web Service → Connect repo
 4. Render auto-detects `render.yaml` (Docker)
 5. Deploy; site at `https://portfolio.onrender.com`
-6. Optional: add custom domain in Settings → Custom Domains
 
 # Function
 
@@ -71,28 +70,28 @@ git push -u origin main
 portfolio/
 ├── .github/
 │   └── workflows/
-│       └── deploy.yml # GitHub Actions: build + deploy to Pages (Config)
-├── Cargo.toml # Rust project config (Config)
-├── Dockerfile # Docker build for Render (Config)
-├── nginx.conf # Nginx config for static serve (Config)
-├── render.yaml # Render service config (Config)
-├── Trunk.toml # WASM build config (Config)
-├── index.html # Entry HTML (Config)
+│       └── deploy.yml # GitHub Actions: build + deploy to Pages    (Config)
+├── Cargo.toml # Rust project config                                (Config)
+├── Dockerfile # Docker build for Render                            (Config)
+├── nginx.conf # Nginx config for static serve                      (Config)
+├── render.yaml # Render service config                             (Config)
+├── Trunk.toml # WASM build config                                  (Config)
+├── index.html # Entry HTML                                         (Config)
 ├── README.md # This file
 ├── styles/
-│   └── main.css # Underwater theme (Frontend)
+│   └── main.css # Underwater theme                                 (Frontend)
 └── src/
-    ├── main.rs # Yew mount (Backend)
-    ├── lib.rs # Crate root (Backend)
-    ├── app.rs # Root App component (Frontend)
-    ├── scene.rs # WebGL2 underwater particle scene (Frontend)
+    ├── main.rs # Yew mount                                         (Backend)
+    ├── lib.rs # Crate root                                         (Backend)
+    ├── app.rs # Root App component                                 (Frontend)
+    ├── scene.rs # WebGL2 underwater particle scene                 (Frontend)
     ├── components/
     │   ├── mod.rs
-    │   ├── hero.rs # Hero section (Frontend)
-    │   ├── repo_grid.rs # Repo grid (Frontend)
-    │   └── repo_card.rs # Repo card (Frontend)
+    │   ├── hero.rs # Hero section                                  (Frontend)
+    │   ├── repo_grid.rs # Repo grid                                (Frontend)
+    │   └── repo_card.rs # Repo card                                (Frontend)
     ├── models/
-    │   └── repo.rs # Repo struct (Backend)
+    │   └── repo.rs # Repo struct                                   (Backend)
     └── api/
-        └── github.rs # GitHub API + cache (Backend)
+        └── github.rs # GitHub API + cache                          (Backend)
 ```
