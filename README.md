@@ -53,7 +53,7 @@ git push -u origin main
 
 4. Push to `main` (or `master`). The workflow builds with Trunk and deploys `dist/` to Cloudflare Pages.
 
-5. Site at `https://azuree0-portfolio.pages.dev` (or the URL in **Workers & Pages** → **azuree0-portfolio**). Optionally add a custom domain there.
+5. Site at https://azuree0.dev (or the URL in **Workers & Pages** → **azuree0-portfolio**).
 
 # Function
 
