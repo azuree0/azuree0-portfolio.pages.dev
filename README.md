@@ -41,11 +41,18 @@ git push -u origin main
 
 1. In Cloudflare: **Workers & Pages** → **Create** → **Pages** → **Connect to Git** (optional). For this repo, use **Direct Upload** so GitHub Actions does the build:
    - **Create project** → **Direct Upload** → name: `portfolio` (must match workflow `--project-name=portfolio`). Skip upload; the first push will deploy.
-2. Get credentials: Dashboard → **Account ID** (right sidebar); **My Profile** → **API Tokens** → Create Token → use "Edit Cloudflare Workers" + "Cloudflare Pages — Edit" (or Custom: Account + Pages Edit).
-3. In the repo: **Settings** → **Secrets and variables** → **Actions** → New repository secret:
-   - `CLOUDFLARE_ACCOUNT_ID` = your Account ID
-   - `CLOUDFLARE_API_TOKEN` = your API token
+
+2. Get credentials: Dashboard → **Account ID** (right sidebar). **My Profile** → **API Tokens** → **Create Custom Token** → restrict to this repo only:
+   - **Permissions:** Account → Cloudflare Pages → Edit.
+   - **Account resources:** Include → **only your account** (not "All accounts").
+   - Use this token only in https://github.com/azuree0/Portfolio (store as secret there).
+
+3. Add secrets: `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN` (pick one):
+   - **Dashboard:** [azuree0/Portfolio Settings → Secrets](https://github.com/azuree0/Portfolio/settings/secrets/actions) → New repository secret.
+   - **CLI:** `gh auth login` then `.\setup-github-secrets.ps1 -AccountId "YOUR_ID" -ApiToken "YOUR_TOKEN"`
+
 4. Push to `main` (or `master`). The workflow builds with Trunk and deploys `dist/` to Cloudflare Pages.
+
 5. Site at `https://portfolio.pages.dev` (or the URL in **Workers & Pages** → **portfolio**). Optionally add a custom domain there.
 
 # Function
@@ -82,6 +89,8 @@ portfolio/
 ├── Dockerfile # Docker build for Render                            (Config)
 ├── nginx.conf # Nginx config for static serve                      (Config)
 ├── render.yaml # Render service config                             (Config)
+├── deploy.ps1 # Build + deploy to Cloudflare (local)               (Config)
+├── setup-github-secrets.ps1 # Add CLOUDFLARE_* secrets via gh CLI  (Config)
 ├── Trunk.toml # WASM build config                                  (Config)
 ├── index.html # Entry HTML                                         (Config)
 ├── README.md # This file
