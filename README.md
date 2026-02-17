@@ -84,7 +84,7 @@ portfolio/
 ├── .github/
 │   └── workflows/
 │       ├── deploy.yml # GitHub Actions: build + deploy to GitHub Pages
-│       └── deploy-cloudflare-pages.yml # GitHub Actions: build + deploy to Cloudflare Pages (free)
+│       └── deploy-cloudflare-pages.yml # GitHub Actions: build + deploy to Cloudflare Pages 
 ├── Cargo.toml # Rust project config                                (Config)
 ├── Dockerfile # Docker build for Render                            (Config)
 ├── nginx.conf # Nginx config for static serve                      (Config)
