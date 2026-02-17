@@ -1,0 +1,6 @@
+# GitHub Linguist: show Rust as main language
+*.rs linguist-language=Rust
+target/ linguist-vendored
+target/** linguist-vendored
+dist/ linguist-generated
+dist/** linguist-generated
