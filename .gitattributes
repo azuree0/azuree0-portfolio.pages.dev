@@ -1,6 +1,20 @@
-# GitHub Linguist: show Rust as main language
+# GitHub Linguist: force Rust as main language; prevent Makefile/DTrace misclassification
 *.rs linguist-language=Rust
 target/ linguist-vendored
 target/** linguist-vendored
 dist/ linguist-generated
 dist/** linguist-generated
+
+# Lock other file types so they are never detected as Makefile/DTrace
+*.js linguist-language=JavaScript
+*.css linguist-language=CSS
+*.html linguist-language=HTML
+*.toml linguist-language=TOML
+*.yml linguist-language=YAML
+*.yaml linguist-language=YAML
+*.sh linguist-language=Shell
+*.ps1 linguist-language=PowerShell
+Dockerfile linguist-language=Dockerfile
+*.conf linguist-language=ApacheConf
+*.template linguist-language=ApacheConf
+.dockerignore linguist-documentation
