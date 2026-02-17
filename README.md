@@ -34,10 +34,7 @@ git branch -M main
 git push -u origin main
 ```
 
-**Deploy to Cloudflare Pages (free)**
-
-- **Workers & Pages**: https://dash.cloudflare.com/f1eeae10e7537ebbaef3bc34f93ab59d/workers-and-pages
-- **Builds (MCP)**: https://builds.mcp.cloudflare.com/mcp
+**Deploy to Cloudflare Pages**
 
 1. In Cloudflare: **Workers & Pages** → **Create** → **Pages** → **Direct Upload**:
    - **Create project** → name: (must match workflow). Drag-and-drop any small file (e.g. `index.html`) to create the project; GitHub Actions will overwrite on first deploy.
