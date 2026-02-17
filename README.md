@@ -39,8 +39,8 @@ git push -u origin main
 - **Workers & Pages**: https://dash.cloudflare.com/f1eeae10e7537ebbaef3bc34f93ab59d/workers-and-pages
 - **Builds (MCP)**: https://builds.mcp.cloudflare.com/mcp
 
-1. In Cloudflare: **Workers & Pages** → **Create** → **Pages** → **Connect to Git** (optional). For this repo, use **Direct Upload** so GitHub Actions does the build:
-   - **Create project** → **Direct Upload** → name: `portfolio` (must match workflow `--project-name=portfolio`). Skip upload; the first push will deploy.
+1. In Cloudflare: **Workers & Pages** → **Create** → **Pages** → **Direct Upload**:
+   - **Create project** → name: `portfolio` (must match workflow). Drag-and-drop any small file (e.g. `index.html`) to create the project; GitHub Actions will overwrite on first deploy.
 
 2. Get credentials: Dashboard → **Account ID** (right sidebar). **My Profile** → **API Tokens** → **Create Custom Token** → restrict to this repo only:
    - **Permissions:** Account → Cloudflare Pages → Edit.
