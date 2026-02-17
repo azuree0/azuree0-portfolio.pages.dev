@@ -1,0 +1,10 @@
+C:\Users\Azure\Documents\Axiom\portfolio\target\wasm32-unknown-unknown\debug\deps\gloo_storage-ae888bef76e19656.d: C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-storage-0.3.0\src\lib.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-storage-0.3.0\src\errors.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-storage-0.3.0\src\local_storage.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-storage-0.3.0\src\session_storage.rs
+
+C:\Users\Azure\Documents\Axiom\portfolio\target\wasm32-unknown-unknown\debug\deps\libgloo_storage-ae888bef76e19656.rlib: C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-storage-0.3.0\src\lib.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-storage-0.3.0\src\errors.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-storage-0.3.0\src\local_storage.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-storage-0.3.0\src\session_storage.rs
+
+C:\Users\Azure\Documents\Axiom\portfolio\target\wasm32-unknown-unknown\debug\deps\libgloo_storage-ae888bef76e19656.rmeta: C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-storage-0.3.0\src\lib.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-storage-0.3.0\src\errors.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-storage-0.3.0\src\local_storage.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-storage-0.3.0\src\session_storage.rs
+
+C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-storage-0.3.0\src\lib.rs:
+C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-storage-0.3.0\src\errors.rs:
+C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-storage-0.3.0\src\local_storage.rs:
+C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\gloo-storage-0.3.0\src\session_storage.rs:

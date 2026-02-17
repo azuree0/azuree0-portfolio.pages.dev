@@ -1,0 +1,9 @@
+C:\Users\Azure\Documents\Axiom\Rust\Portfolio\target\debug\deps\serde_wasm_bindgen-737f788f7005dcdb.d: C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-wasm-bindgen-0.6.5\src\lib.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-wasm-bindgen-0.6.5\src\de.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-wasm-bindgen-0.6.5\src\error.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-wasm-bindgen-0.6.5\src\ser.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-wasm-bindgen-0.6.5\src\../README.md
+
+C:\Users\Azure\Documents\Axiom\Rust\Portfolio\target\debug\deps\libserde_wasm_bindgen-737f788f7005dcdb.rmeta: C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-wasm-bindgen-0.6.5\src\lib.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-wasm-bindgen-0.6.5\src\de.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-wasm-bindgen-0.6.5\src\error.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-wasm-bindgen-0.6.5\src\ser.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-wasm-bindgen-0.6.5\src\../README.md
+
+C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-wasm-bindgen-0.6.5\src\lib.rs:
+C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-wasm-bindgen-0.6.5\src\de.rs:
+C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-wasm-bindgen-0.6.5\src\error.rs:
+C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-wasm-bindgen-0.6.5\src\ser.rs:
+C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-wasm-bindgen-0.6.5\src\../README.md:

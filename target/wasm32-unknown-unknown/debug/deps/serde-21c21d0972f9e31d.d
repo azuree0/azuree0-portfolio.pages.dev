@@ -1,0 +1,14 @@
+C:\Users\Azure\Documents\Axiom\portfolio\target\wasm32-unknown-unknown\debug\deps\serde-21c21d0972f9e31d.d: C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\lib.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\integer128.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\mod.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\de.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\ser.rs C:\Users\Azure\Documents\Axiom\portfolio\target\wasm32-unknown-unknown\debug\build\serde-ca733806d85138be\out/private.rs
+
+C:\Users\Azure\Documents\Axiom\portfolio\target\wasm32-unknown-unknown\debug\deps\libserde-21c21d0972f9e31d.rlib: C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\lib.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\integer128.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\mod.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\de.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\ser.rs C:\Users\Azure\Documents\Axiom\portfolio\target\wasm32-unknown-unknown\debug\build\serde-ca733806d85138be\out/private.rs
+
+C:\Users\Azure\Documents\Axiom\portfolio\target\wasm32-unknown-unknown\debug\deps\libserde-21c21d0972f9e31d.rmeta: C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\lib.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\integer128.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\mod.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\de.rs C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\ser.rs C:\Users\Azure\Documents\Axiom\portfolio\target\wasm32-unknown-unknown\debug\build\serde-ca733806d85138be\out/private.rs
+
+C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\lib.rs:
+C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\integer128.rs:
+C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\mod.rs:
+C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\de.rs:
+C:\Users\Azure\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\serde-1.0.228\src\private\ser.rs:
+C:\Users\Azure\Documents\Axiom\portfolio\target\wasm32-unknown-unknown\debug\build\serde-ca733806d85138be\out/private.rs:
+
+# env-dep:OUT_DIR=C:\\Users\\Azure\\Documents\\Axiom\\portfolio\\target\\wasm32-unknown-unknown\\debug\\build\\serde-ca733806d85138be\\out
