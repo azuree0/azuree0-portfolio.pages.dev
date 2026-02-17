@@ -20,11 +20,17 @@ window.wasmBindings = bindings;
 dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
 
 </script>
-    <link rel="stylesheet" href="/main-5e6f022975306af7.css" integrity="sha384-7JHvLzmz/uXBi5na31TK6IArbfb5/A2jphy1hSXQWUBaUMApafdJMCEkfzvrDw1v"/>
+    <link rel="stylesheet" href="/main-17f5b40e0d77c843.css" integrity="sha384-Yd4QeEymPnhelYRjp0KOqVi31m38VHMdkKQQRqZnZTk4NKem5Xq7MbZkGc48mKTe"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
 <link rel="modulepreload" href="/portfolio-5b544de667e584ce.js" crossorigin="anonymous" integrity="sha384-8UtuW9itrebxyg42xT2iLpKoIv0C9KBlrX/65JYFiRrQCtUpC99h4ddVKG3DyR0Q"><link rel="preload" href="/portfolio-5b544de667e584ce_bg.wasm" crossorigin="anonymous" integrity="sha384-DfJnGEgrwfn0BU7utslOpa8z/7+uq/Eb263gC0poK8fxp5besFjRGjYuQkP22L/X" as="fetch" type="application/wasm"></head>
 <body>
-    <div id="app"></div>
+    <div id="app">
+        <div id="loading-fallback" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem;text-align:center;position:relative;z-index:2">
+            <h1 style="font-family:'JetBrains Mono',monospace;font-size:clamp(2rem,6vw,3rem);color:#e8fff8;margin-bottom:0.5rem">Azure</h1>
+            <p style="color:#97e8eb;font-size:1rem">Portfolio site for non coder.</p>
+            <p style="color:#0eacc7;font-size:0.9rem;margin-top:1rem;word-break:break-all">https://portfolio-docker-x4o5.onrender.com/</p>
+        </div>
+    </div>
     <script>
 (function(){if(window.matchMedia("(pointer: coarse)").matches){document.body.classList.add("is-touch");return}const c=document.createElement("div");c.className="amber-cursor";document.body.appendChild(c);const m=(x,y)=>{c.style.opacity="1";c.style.left=x+"px";c.style.top=y+"px"};document.addEventListener("mousemove",e=>m(e.clientX,e.clientY));document.addEventListener("mousedown",()=>c.classList.add("active"));document.addEventListener("mouseup",()=>c.classList.remove("active"));document.addEventListener("mouseleave",()=>{c.style.opacity="0"});document.addEventListener("mouseenter",()=>{c.style.opacity="1"})})();
     </script>
