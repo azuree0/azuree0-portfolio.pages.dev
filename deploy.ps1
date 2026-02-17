@@ -13,9 +13,9 @@ if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 # Deploy (local) - needs Node + wrangler + Cloudflare credentials
 if ($env:CLOUDFLARE_API_TOKEN -and $env:CLOUDFLARE_ACCOUNT_ID) {
     Write-Host "Deploying to Cloudflare Pages..." -ForegroundColor Cyan
-    npx wrangler pages deploy dist --project-name=portfolio
+    npx wrangler pages deploy dist --project-name=azuree0-portfolio
     if ($LASTEXITCODE -eq 0) {
-        Write-Host "Deployed. Site: https://portfolio.pages.dev" -ForegroundColor Green
+        Write-Host "Deployed. Site: https://azuree0-portfolio.pages.dev" -ForegroundColor Green
     }
 } else {
     Write-Host "Skipping local deploy (no CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID)." -ForegroundColor Yellow

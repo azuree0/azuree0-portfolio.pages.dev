@@ -40,7 +40,7 @@ git push -u origin main
 - **Builds (MCP)**: https://builds.mcp.cloudflare.com/mcp
 
 1. In Cloudflare: **Workers & Pages** → **Create** → **Pages** → **Direct Upload**:
-   - **Create project** → name: `portfolio` (must match workflow). Drag-and-drop any small file (e.g. `index.html`) to create the project; GitHub Actions will overwrite on first deploy.
+   - **Create project** → name: `azuree0-portfolio` (must match workflow). Drag-and-drop any small file (e.g. `index.html`) to create the project; GitHub Actions will overwrite on first deploy.
 
 2. Get credentials: Dashboard → **Account ID** (right sidebar). **My Profile** → **API Tokens** → **Create Custom Token** → restrict to this repo only:
    - **Permissions:** Account → Cloudflare Pages → Edit.
@@ -53,7 +53,7 @@ git push -u origin main
 
 4. Push to `main` (or `master`). The workflow builds with Trunk and deploys `dist/` to Cloudflare Pages.
 
-5. Site at `https://portfolio.pages.dev` (or the URL in **Workers & Pages** → **portfolio**). Optionally add a custom domain there.
+5. Site at `https://azuree0-portfolio.pages.dev` (or the URL in **Workers & Pages** → **azuree0-portfolio**). Optionally add a custom domain there.
 
 # Function
 
