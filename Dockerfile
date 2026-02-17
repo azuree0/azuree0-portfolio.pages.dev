@@ -14,13 +14,19 @@ RUN trunk build --release
 
 # Runtime stage: nginx to serve static files
 FROM nginx:alpine
+RUN apk add --no-cache gettext
 WORKDIR /usr/share/nginx/html
 
 # Copy built assets from build stage
 COPY --from=build /app/dist .
 
-# Custom nginx config: listen on 8080 (Render PORT)
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Nginx config template: PORT is substituted at runtime (Render sets PORT=10000)
+COPY nginx.conf.template /etc/nginx/conf.d/default.conf.template
+RUN rm -f /etc/nginx/conf.d/default.conf
+
+# Startup: substitute PORT into nginx config, then start nginx
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
 
 EXPOSE 8080
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["/start.sh"]
