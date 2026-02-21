@@ -14,6 +14,7 @@ const EMAIL: &str = "azure.ad@yahoo.com";
 pub fn app() -> Html {
     // Start with fallback so content shows immediately; fetch updates in background
     let repos = use_state(|| github::static_fallback());
+    let tagline_hovered = use_state(|| false);
 
     let fetch_repos = Rc::new({
         let repos = repos.clone();
@@ -39,9 +40,7 @@ pub fn app() -> Html {
     {
         let fetch_repos = fetch_repos.clone();
         use_effect_with((), move |_| {
-            let document = window()
-                .and_then(|w| w.document())
-                .expect("no document");
+            let document = window().and_then(|w| w.document()).expect("no document");
             let doc_clone = document.clone();
             let listener = EventListener::new(&document, "visibilitychange", move |_| {
                 if doc_clone.visibility_state() == web_sys::VisibilityState::Visible {
@@ -81,15 +80,26 @@ pub fn app() -> Html {
             <div class="overlay">
                 <div id="caustics-container" class="caustics-container"></div>
                 <MarineSnow />
-                <Hero />
-                <main class="content">
-                    <RepoGrid repos={(*repos).clone()} />
-                </main>
-                <footer class="overlay-footer">
-                    <button type="button" class="hero-email" onclick={copy_email} title="Copy email">
-                        {EMAIL}
-                    </button>
-                </footer>
+                <div class="overlay-body">
+                    <Hero
+                        on_tagline_enter={Callback::from({
+                            let tagline_hovered = tagline_hovered.clone();
+                            move |_| tagline_hovered.set(true)
+                        })}
+                        on_tagline_leave={Callback::from({
+                            let tagline_hovered = tagline_hovered.clone();
+                            move |_| tagline_hovered.set(false)
+                        })}
+                    />
+                    <main class="content">
+                        <RepoGrid repos={(*repos).clone()} show_poem={*tagline_hovered} />
+                    </main>
+                    <footer class="overlay-footer">
+                        <button type="button" class="hero-email" onclick={copy_email} title="Copy email">
+                            {EMAIL}
+                        </button>
+                    </footer>
+                </div>
             </div>
         </>
     }

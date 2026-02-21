@@ -5,6 +5,9 @@
 # Trunk / WASM build output
 /dist/
 
+# Emscripten SDK
+/emsdk/
+
 # IDE / OS
 .idea/
 .vscode/

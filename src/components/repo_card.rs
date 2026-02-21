@@ -1,9 +1,16 @@
 use crate::models::Repo;
 use yew::prelude::*;
 
+const POEM: &str = r#"Beneath the wave, a different light,
+where data streams in codes of sight.
+Through kelp-built towers, data flows,
+in currents where the riptide goes."#;
+
 #[derive(Properties, PartialEq)]
 pub struct RepoCardProps {
     pub repo: Repo,
+    #[prop_or(false)]
+    pub show_poem: bool,
 }
 
 #[function_component(RepoCard)]
@@ -17,8 +24,22 @@ pub fn repo_card(props: &RepoCardProps) -> Html {
     };
 
     let screenshot_block = props.repo.screenshot.as_ref().map(|img| {
+        let wrap_class = if props.show_poem {
+            "repo-screenshot-wrap poem-visible"
+        } else {
+            "repo-screenshot-wrap"
+        };
         html! {
-            <div class="repo-screenshot-wrap">
+            <div class={wrap_class}>
+                if props.show_poem {
+                    <div class="poem-over-screenshot" aria-hidden="true">
+                        <div class="poem-over-screenshot-content">
+                            { for POEM.split("\n\n").map(|stanza| html! {
+                                <p class="poem-stanza">{stanza}</p>
+                            }) }
+                        </div>
+                    </div>
+                }
                 <img src={img.clone()} alt={props.repo.name.clone()} class="repo-screenshot-full" />
             </div>
         }

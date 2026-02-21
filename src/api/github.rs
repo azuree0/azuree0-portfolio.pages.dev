@@ -1,7 +1,7 @@
 use crate::models::Repo;
 use gloo_storage::{LocalStorage, Storage};
-use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 use std::time::{SystemTime, UNIX_EPOCH};
 
 const CACHE_KEY: &str = "portfolio_repos";
