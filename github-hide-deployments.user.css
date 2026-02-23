@@ -1,0 +1,12 @@
+/* ==UserStyle==
+@name         Hide GitHub Deployments row
+@namespace    github.com
+@version      1.0
+@description Hide the Deployments row in repo sidebar (azuree0/Portfolio)
+@match       https://github.com/azuree0/Portfolio*
+==/UserStyle== */
+
+/* Hide Deployments row on repo sidebar */
+main#js-repo-pjax-container .BorderGrid-row:nth-child(3) {
+  display: none;
+}

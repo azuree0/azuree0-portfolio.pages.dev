@@ -1,8 +1,19 @@
 # Add custom domain azuree0.dev to Cloudflare Pages project azuree0-portfolio via API.
 # Requires: CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID (env or .env). Same as deploy.
 # Run: .\add-pages-custom-domain.ps1
+# Or add domain manually: Workers & Pages → azuree0-portfolio → Custom domains → Set up a domain
 
 $ErrorActionPreference = "Stop"
+
+# Load .env if present
+if (Test-Path .env) {
+    Get-Content .env | ForEach-Object {
+        if ($_ -match '^([^#=]+)=(.*)$') {
+            [Environment]::SetEnvironmentVariable($matches[1].Trim(), $matches[2].Trim(), 'Process')
+        }
+    }
+}
+
 $accountId = $env:CLOUDFLARE_ACCOUNT_ID
 $token = $env:CLOUDFLARE_API_TOKEN
 $projectName = "azuree0-portfolio"
