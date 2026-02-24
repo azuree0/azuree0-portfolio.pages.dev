@@ -36,7 +36,7 @@ pub fn hero(props: &HeroProps) -> Html {
                         let email_hovered = email_hovered.clone();
                         move |_| email_hovered.set(false)
                     })}
-                    title="Copy email"
+                    aria-label="Copy email"
                 >
                     if *email_hovered {
                         <span class="hero-email-copy">{"Copy email"}</span>
