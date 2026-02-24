@@ -16,7 +16,7 @@ pub fn hero(props: &HeroProps) -> Html {
                 onmouseenter={props.on_tagline_enter.clone()}
                 onmouseleave={props.on_tagline_leave.clone()}
             >
-                <p class="hero-tagline">{"Freelance code, Portfolio"}</p>
+                <p class="hero-tagline">{"Freelance coder, Portfolio"}</p>
             </span>
         </header>
     }
