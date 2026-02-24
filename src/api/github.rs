@@ -128,6 +128,7 @@ pub fn static_fallback() -> Vec<Repo> {
     ]
 }
 
+/// Fetches repos from GitHub API, using cache if valid. Merges screenshots from static fallback.
 pub async fn fetch_repos() -> Result<Vec<Repo>, String> {
     // Try cache first (instant load if valid)
     if let Ok(cached) = get_cached() {
@@ -193,10 +194,12 @@ pub async fn fetch_repos_with_fallback() -> Vec<Repo> {
     }
 }
 
+/// Reads cached repos from localStorage.
 fn get_cached() -> Result<CachedRepos, ()> {
     LocalStorage::get(CACHE_KEY).map_err(|_| ())
 }
 
+/// Writes repos to localStorage with current timestamp.
 fn set_cache(repos: &[Repo]) {
     let now = SystemTime::now()
         .duration_since(UNIX_EPOCH)
@@ -209,6 +212,7 @@ fn set_cache(repos: &[Repo]) {
     let _ = LocalStorage::set(CACHE_KEY, cached);
 }
 
+/// Returns true if cache is older than CACHE_TTL_SECS.
 fn is_stale(fetched_at: u64) -> bool {
     let now = SystemTime::now()
         .duration_since(UNIX_EPOCH)

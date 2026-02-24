@@ -5,7 +5,7 @@
 
 $ErrorActionPreference = "Stop"
 
-# Load .env if present
+# Load .env: sets CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_API_TOKEN in process.
 if (Test-Path .env) {
     Get-Content .env | ForEach-Object {
         if ($_ -match '^([^#=]+)=(.*)$') {
@@ -24,6 +24,7 @@ if (-not $accountId -or -not $token) {
     exit 1
 }
 
+# POST to Cloudflare Pages API to add the custom domain.
 $url = "https://api.cloudflare.com/client/v4/accounts/$accountId/pages/projects/$projectName/domains"
 $body = @{ name = $domain } | ConvertTo-Json
 

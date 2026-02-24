@@ -10,6 +10,7 @@ use yew::prelude::*;
 
 const EMAIL: &str = "azure.ad@yahoo.com";
 
+/// Root App component: WebGL scene, hero, repo grid, GitHub fetch, and copy-email.
 #[function_component(App)]
 pub fn app() -> Html {
     // Start with fallback so content shows immediately; fetch updates in background
@@ -90,15 +91,12 @@ pub fn app() -> Html {
                             let tagline_hovered = tagline_hovered.clone();
                             move |_| tagline_hovered.set(false)
                         })}
+                        on_copy_email={copy_email}
+                        email={EMAIL.to_string()}
                     />
                     <main class="content">
                         <RepoGrid repos={(*repos).clone()} show_poem={*tagline_hovered} />
                     </main>
-                    <footer class="overlay-footer">
-                        <button type="button" class="hero-email" onclick={copy_email} title="Copy email">
-                            {EMAIL}
-                        </button>
-                    </footer>
                 </div>
             </div>
         </>

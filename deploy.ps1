@@ -4,13 +4,13 @@
 
 $ErrorActionPreference = "Stop"
 
-# Build
+# Build: Trunk compiles Rust WASM and outputs to dist/
 Write-Host "Building with Trunk..." -ForegroundColor Cyan
 $env:NO_COLOR = $null
 trunk build --release --public-url /
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
-# Deploy (local) - needs Node + wrangler + Cloudflare credentials
+# Deploy: uploads dist/ to Cloudflare Pages via wrangler (requires Node + wrangler)
 if ($env:CLOUDFLARE_API_TOKEN -and $env:CLOUDFLARE_ACCOUNT_ID) {
     Write-Host "Deploying to Cloudflare Pages..." -ForegroundColor Cyan
     npx wrangler pages deploy dist --project-name=azuree0-portfolio

@@ -8,6 +8,7 @@ pub use app::App;
 
 use wasm_bindgen::prelude::*;
 
+/// WASM entry point: mounts the Yew App component into the #app DOM element.
 #[wasm_bindgen(start)]
 pub fn run_app() {
     let document = web_sys::window()

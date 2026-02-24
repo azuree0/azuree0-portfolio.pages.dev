@@ -2,6 +2,7 @@
 # Requires: gh CLI (winget install GitHub.cli) and: gh auth login
 # Usage: .\setup-github-secrets.ps1 -AccountId "YOUR_ACCOUNT_ID" -ApiToken "YOUR_API_TOKEN"
 
+# Parameters: AccountId and ApiToken from Cloudflare dashboard.
 param(
     [Parameter(Mandatory=$true)][string]$AccountId,
     [Parameter(Mandatory=$true)][string]$ApiToken

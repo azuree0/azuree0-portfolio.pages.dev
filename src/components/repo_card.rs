@@ -13,6 +13,7 @@ pub struct RepoCardProps {
     pub show_poem: bool,
 }
 
+/// Single repo card: screenshot (or header/desc), optional poem overlay, link to GitHub.
 #[function_component(RepoCard)]
 pub fn repo_card(props: &RepoCardProps) -> Html {
     let lang_color = match props.repo.language.as_deref() {

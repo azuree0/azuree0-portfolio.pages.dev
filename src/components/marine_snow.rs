@@ -3,6 +3,7 @@ use yew::prelude::*;
 
 const PARTICLE_COUNT: usize = 50;
 
+/// Marine snow: drifting particles overlay for underwater aesthetic.
 #[function_component(MarineSnow)]
 pub fn marine_snow() -> Html {
     let particles = (0..PARTICLE_COUNT).map(|i| {

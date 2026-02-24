@@ -42,16 +42,19 @@ impl Component for Scene3d {
     type Message = ();
     type Properties = ();
 
+    /// Creates the Scene3d component (no props).
     fn create(_ctx: &Context<Self>) -> Self {
         Self
     }
 
+    /// Renders the full-screen WebGL canvas element.
     fn view(&self, _ctx: &Context<Self>) -> Html {
         html! {
             <canvas id="scene-canvas" />
         }
     }
 
+    /// On first render, initializes WebGL2 and starts the particle animation loop.
     fn rendered(&mut self, _ctx: &Context<Self>, first_render: bool) {
         if !first_render {
             return;
@@ -72,6 +75,7 @@ impl Component for Scene3d {
     }
 }
 
+/// Initializes WebGL2, compiles shaders, uploads particle data, and starts the animation loop.
 fn init_and_run(canvas: &HtmlCanvasElement) -> Result<(), String> {
     let gl = canvas
         .get_context("webgl2")
@@ -170,6 +174,7 @@ fn init_and_run(canvas: &HtmlCanvasElement) -> Result<(), String> {
     Ok(())
 }
 
+/// Applies a CSS gradient to body when WebGL2 is unavailable.
 fn apply_fallback_gradient() {
     if let Some(doc) = web_sys::window().and_then(|w| w.document()) {
         if let Some(body) = doc.body() {
@@ -181,6 +186,7 @@ fn apply_fallback_gradient() {
     }
 }
 
+/// Resizes the canvas to match client size and device pixel ratio.
 fn resize_canvas(canvas: &HtmlCanvasElement) {
     let dpr = web_sys::window().map(|w| w.device_pixel_ratio()).unwrap_or(1.0);
     let width = (canvas.client_width() as f64 * dpr) as u32;
@@ -191,6 +197,7 @@ fn resize_canvas(canvas: &HtmlCanvasElement) {
     }
 }
 
+/// Compiles vertex and fragment shaders and links them into a WebGL program.
 fn compile_shaders(gl: &WebGl2RenderingContext) -> Result<web_sys::WebGlProgram, String> {
     let vs = gl
         .create_shader(WebGl2RenderingContext::VERTEX_SHADER)
