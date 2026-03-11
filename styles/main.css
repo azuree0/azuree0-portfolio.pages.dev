@@ -10,6 +10,7 @@
   --accent-green: #00ff88;
   --accent-light: #9ce4f2;
   --accent-soft: #5ec8d5;
+  --light-gold: #e8d5a3;
   --email-yellow: #fffde7;
   --text-primary: #e8fff8;
   --text-muted: #97e8eb;
@@ -271,24 +272,23 @@ body.is-touch {
   color: var(--email-yellow);
 }
 
-/* "Copy email" on hover – same gradient effect as poem */
+/* "Copy email" on hover – normal font, light gold, same gradient effect as poem */
 .hero-email-copy {
-  display: inline-block;
-  font-size: 1.10rem;
-  font-family: 'Dancing Script', cursive;
-  font-weight: 500;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 400;
   background: linear-gradient(
     135deg,
-    var(--accent-light) 0%,
-    var(--text-primary) 25%,
-    var(--accent-aqua) 50%,
-    var(--text-primary) 75%,
-    var(--accent-light) 100%
+    var(--light-gold) 0%,
+    var(--email-yellow) 25%,
+    var(--light-gold) 50%,
+    var(--email-yellow) 75%,
+    var(--light-gold) 100%
   );
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 12px rgba(156, 228, 242, 0.6);
+  text-shadow: 0 0 12px rgba(232, 213, 163, 0.6);
 }
 
 .overlay-footer {
@@ -456,23 +456,22 @@ body.is-touch {
 
 .poem-over-screenshot-content {
   overflow: visible;
-  font-size: 1.0rem;
-  line-height: 1.35;
-  font-family: 'Dancing Script', cursive;
-  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.6;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 400;
   background: linear-gradient(
     135deg,
-    var(--accent-light) 0%,
-    var(--text-primary) 25%,
-    var(--accent-aqua) 50%,
-    var(--text-primary) 75%,
-    var(--accent-light) 100%
+    var(--accent-cyan) 0%,
+    var(--accent-aqua) 35%,
+    var(--accent-light) 70%,
+    var(--text-primary) 100%
   );
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 12px rgba(156, 228, 242, 0.6);
-  white-space: pre-line;
+  text-shadow: 0 0 14px rgba(110, 212, 227, 0.8);
+  white-space: normal;
   text-align: center;
 }
 
