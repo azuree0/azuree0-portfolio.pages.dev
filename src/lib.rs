@@ -2,6 +2,7 @@ pub mod api;
 pub mod app;
 pub mod components;
 pub mod models;
+pub mod prefetch;
 pub mod scene;
 
 pub use app::App;

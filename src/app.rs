@@ -13,8 +13,8 @@ const EMAIL: &str = "azure.ad@yahoo.com";
 /// Root App component: WebGL scene, hero, repo grid, GitHub fetch, and copy-email.
 #[function_component(App)]
 pub fn app() -> Html {
-    // Start with fallback so content shows immediately; fetch updates in background
-    let repos = use_state(|| github::static_fallback());
+    // Cached list or static fallback for instant paint; fetch always refreshes from GitHub next.
+    let repos = use_state(|| github::initial_repos());
     let tagline_hovered = use_state(|| false);
 
     let fetch_repos = Rc::new({
@@ -52,12 +52,12 @@ pub fn app() -> Html {
         });
     }
 
-    // Periodic refresh every 30 min
+    // Periodic refresh so new public repos appear without a full reload (GitHub unauthenticated limit: 60 req/hr per IP).
     {
         let fetch_repos = fetch_repos.clone();
         use_effect_with((), move |_| {
             let fetch = fetch_repos.clone();
-            let _interval = Interval::new(30 * 60 * 1000, move || {
+            let _interval = Interval::new(5 * 60 * 1000, move || {
                 fetch();
             });
             || ()

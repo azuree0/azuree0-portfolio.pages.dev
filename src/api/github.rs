@@ -5,7 +5,41 @@ use std::collections::HashMap;
 use std::time::{SystemTime, UNIX_EPOCH};
 
 const CACHE_KEY: &str = "portfolio_repos";
-const CACHE_TTL_SECS: u64 = 900; // 15 min
+/// Max GitHub API pages (100 repos each) to avoid unbounded requests.
+const MAX_REPO_PAGES: u32 = 10;
+
+/// Grid order: board games (Go → … → Mehen), then Rubik → 4D-cube → Bria-ai → Aerospace → SDC → Liquid.
+/// Repos not listed here sort after, by name.
+const REPO_DISPLAY_ORDER: &[&str] = &[
+    "Go",
+    "Latrones",
+    "Game-of-Ur",
+    "Chaturanga",
+    "Nard",
+    "Senet",
+    "Mehen",
+    "Rubik",
+    "4D-cube",
+    "Bria-ai",
+    "Aerospace",
+    "Silent-data-corruption",
+    "Liquid",
+];
+
+/// Stable sort so the grid matches `REPO_DISPLAY_ORDER`; unknown names follow, ordered by name.
+fn sort_repos_for_display(repos: &mut Vec<Repo>) {
+    repos.sort_by(|a, b| {
+        let ia = REPO_DISPLAY_ORDER
+            .iter()
+            .position(|&n| n == a.name.as_str())
+            .unwrap_or(REPO_DISPLAY_ORDER.len());
+        let ib = REPO_DISPLAY_ORDER
+            .iter()
+            .position(|&n| n == b.name.as_str())
+            .unwrap_or(REPO_DISPLAY_ORDER.len());
+        ia.cmp(&ib).then_with(|| a.name.cmp(&b.name))
+    });
+}
 
 #[derive(Serialize, Deserialize)]
 struct CachedRepos {
@@ -13,18 +47,28 @@ struct CachedRepos {
     fetched_at: u64,
 }
 
+/// Instant paint: last successful fetch from localStorage, else hardcoded fallback.
+pub fn initial_repos() -> Vec<Repo> {
+    if let Ok(cached) = get_cached() {
+        let mut r = cached.repos;
+        sort_repos_for_display(&mut r);
+        return r;
+    }
+    static_fallback()
+}
+
 /// Static fallback repos when API fails (azuree0's known repos)
 pub fn static_fallback() -> Vec<Repo> {
     let base = "https://github.com/azuree0";
     vec![
         Repo {
-            name: "Senet".to_string(),
-            description: Some("One of the oldest known board games, dating back to ancient Egypt (around 3100 BCE). Played on 30 squares in three rows. Players move pieces based on dice throws, with special rules for squares like the House of Water and House of Happiness. Senet means 'passing' in ancient Egyptian—the soul's passage through the underworld.".to_string()),
-            html_url: format!("{}/Senet", base),
+            name: "Go".to_string(),
+            description: Some("Go board game".to_string()),
+            html_url: format!("{}/Go", base),
             language: Some("Rust".to_string()),
             stargazers_count: 1,
             updated_at: String::new(),
-            screenshot: Some("https://github.com/user-attachments/assets/b12746e5-fb64-41a4-b343-5ec77166cff6".to_string()),
+            screenshot: Some("https://github.com/user-attachments/assets/f52cbdc4-afe9-4169-8a03-ed025b6a834a".to_string()),
         },
         Repo {
             name: "Latrones".to_string(),
@@ -36,24 +80,6 @@ pub fn static_fallback() -> Vec<Repo> {
             screenshot: Some("https://github.com/user-attachments/assets/182fd35b-a924-4749-8f37-9f48060ec49f".to_string()),
         },
         Repo {
-            name: "Chaturanga".to_string(),
-            description: Some("Ancient Indian chess precursor".to_string()),
-            html_url: format!("{}/Chaturanga", base),
-            language: Some("Rust".to_string()),
-            stargazers_count: 1,
-            updated_at: String::new(),
-            screenshot: Some("https://github.com/user-attachments/assets/ebd040e8-8939-4ad7-bc43-e655a4ba6582".to_string()),
-        },
-        Repo {
-            name: "Go".to_string(),
-            description: Some("Go board game".to_string()),
-            html_url: format!("{}/Go", base),
-            language: Some("Rust".to_string()),
-            stargazers_count: 1,
-            updated_at: String::new(),
-            screenshot: Some("https://github.com/user-attachments/assets/f52cbdc4-afe9-4169-8a03-ed025b6a834a".to_string()),
-        },
-        Repo {
             name: "Game-of-Ur".to_string(),
             description: Some("Royal Game of Ur".to_string()),
             html_url: format!("{}/Game-of-Ur", base),
@@ -63,13 +89,13 @@ pub fn static_fallback() -> Vec<Repo> {
             screenshot: Some("https://github.com/user-attachments/assets/fe00622d-3483-47b2-b9ff-b00a17f4c159".to_string()),
         },
         Repo {
-            name: "Mehen".to_string(),
-            description: Some("Ancient Egyptian snake game".to_string()),
-            html_url: format!("{}/Mehen", base),
+            name: "Chaturanga".to_string(),
+            description: Some("Ancient Indian chess precursor".to_string()),
+            html_url: format!("{}/Chaturanga", base),
             language: Some("Rust".to_string()),
             stargazers_count: 1,
             updated_at: String::new(),
-            screenshot: Some("https://github.com/user-attachments/assets/b9a324c1-822d-49ed-b88e-13fbc2b17f04".to_string()),
+            screenshot: Some("https://github.com/user-attachments/assets/ebd040e8-8939-4ad7-bc43-e655a4ba6582".to_string()),
         },
         Repo {
             name: "Nard".to_string(),
@@ -81,13 +107,22 @@ pub fn static_fallback() -> Vec<Repo> {
             screenshot: Some("https://github.com/user-attachments/assets/9cdc289f-cd3d-433f-af37-d508c45c7179".to_string()),
         },
         Repo {
-            name: "Silent-data-corruption".to_string(),
-            description: Some("C++ project".to_string()),
-            html_url: format!("{}/Silent-data-corruption", base),
-            language: Some("C++".to_string()),
-            stargazers_count: 0,
+            name: "Senet".to_string(),
+            description: Some("One of the oldest known board games, dating back to ancient Egypt (around 3100 BCE). Played on 30 squares in three rows. Players move pieces based on dice throws, with special rules for squares like the House of Water and House of Happiness. Senet means 'passing' in ancient Egyptian—the soul's passage through the underworld.".to_string()),
+            html_url: format!("{}/Senet", base),
+            language: Some("Rust".to_string()),
+            stargazers_count: 1,
             updated_at: String::new(),
-            screenshot: Some("https://github.com/user-attachments/assets/1db52073-faf9-4e6d-895c-36c66dc1625d".to_string()),
+            screenshot: Some("https://github.com/user-attachments/assets/b12746e5-fb64-41a4-b343-5ec77166cff6".to_string()),
+        },
+        Repo {
+            name: "Mehen".to_string(),
+            description: Some("Ancient Egyptian snake game".to_string()),
+            html_url: format!("{}/Mehen", base),
+            language: Some("Rust".to_string()),
+            stargazers_count: 1,
+            updated_at: String::new(),
+            screenshot: Some("https://github.com/user-attachments/assets/b9a324c1-822d-49ed-b88e-13fbc2b17f04".to_string()),
         },
         Repo {
             name: "Rubik".to_string(),
@@ -99,13 +134,16 @@ pub fn static_fallback() -> Vec<Repo> {
             screenshot: Some("https://github.com/user-attachments/assets/5de4e3d7-b660-4ea4-a513-aca077b695cf".to_string()),
         },
         Repo {
-            name: "Liquid".to_string(),
-            description: Some("Liquid templates".to_string()),
-            html_url: format!("{}/Liquid", base),
-            language: Some("Liquid".to_string()),
+            name: "4D-cube".to_string(),
+            description: Some("4D tesseract: SFML/OpenGL, 4D rotations and projection.".to_string()),
+            html_url: format!("{}/4D-cube", base),
+            language: Some("C++".to_string()),
             stargazers_count: 0,
             updated_at: String::new(),
-            screenshot: Some("https://github.com/user-attachments/assets/ac0f0af2-e95e-4591-b848-e30c89675822".to_string()),
+            screenshot: Some(
+                "https://github.com/user-attachments/assets/267af065-af29-4cad-8075-786b07822982"
+                    .to_string(),
+            ),
         },
         Repo {
             name: "Bria-ai".to_string(),
@@ -125,50 +163,78 @@ pub fn static_fallback() -> Vec<Repo> {
             updated_at: String::new(),
             screenshot: Some("https://github.com/user-attachments/assets/86f9cac2-334b-4cf7-b374-d82dba4bd186".to_string()),
         },
+        Repo {
+            name: "Silent-data-corruption".to_string(),
+            description: Some("C++ project".to_string()),
+            html_url: format!("{}/Silent-data-corruption", base),
+            language: Some("C++".to_string()),
+            stargazers_count: 0,
+            updated_at: String::new(),
+            screenshot: Some("https://github.com/user-attachments/assets/1db52073-faf9-4e6d-895c-36c66dc1625d".to_string()),
+        },
+        Repo {
+            name: "Liquid".to_string(),
+            description: Some("Liquid templates".to_string()),
+            html_url: format!("{}/Liquid", base),
+            language: Some("Liquid".to_string()),
+            stargazers_count: 0,
+            updated_at: String::new(),
+            screenshot: Some("https://github.com/user-attachments/assets/ac0f0af2-e95e-4591-b848-e30c89675822".to_string()),
+        },
     ]
 }
 
-/// Fetches repos from GitHub API, using cache if valid. Merges screenshots from static fallback.
+/// Fetches all public repos from GitHub (paginated), always hitting the network when possible.
+/// On failure, returns last cached list if any. Merges screenshots from static fallback.
 pub async fn fetch_repos() -> Result<Vec<Repo>, String> {
-    // Try cache first (instant load if valid)
-    if let Ok(cached) = get_cached() {
-        if !is_stale(cached.fetched_at) {
-            return Ok(cached.repos);
-        }
-    }
+    let mut repos: Vec<Repo> = Vec::new();
 
-    let url = "https://api.github.com/users/azuree0/repos?sort=updated&per_page=100";
-    let response = match gloo_net::http::Request::get(url)
-        .header("Accept", "application/vnd.github.v3+json")
-        .send()
-        .await
-    {
-        Ok(r) => r,
-        Err(e) => {
-            // Network/CORS failure: try cache, then static fallback
+    for page in 1..=MAX_REPO_PAGES {
+        let url = format!(
+            "https://api.github.com/users/azuree0/repos?sort=updated&per_page=100&page={}",
+            page
+        );
+        let response = match gloo_net::http::Request::get(&url)
+            .header("Accept", "application/vnd.github.v3+json")
+            .header("User-Agent", "azuree0-portfolio-pages")
+            .send()
+            .await
+        {
+            Ok(r) => r,
+            Err(e) => {
+                if let Ok(cached) = get_cached() {
+                    return Ok(cached.repos);
+                }
+                return Err(format!("Network error: {}. Using fallback.", e));
+            }
+        };
+
+        if !response.ok() {
             if let Ok(cached) = get_cached() {
                 return Ok(cached.repos);
             }
-            return Err(format!("Network error: {}. Using fallback.", e));
+            return Err(format!("GitHub API error: {}", response.status()));
         }
-    };
 
-    if !response.ok() {
-        if let Ok(cached) = get_cached() {
-            return Ok(cached.repos);
-        }
-        return Err(format!("GitHub API error: {}", response.status()));
-    }
-
-    let mut repos: Vec<Repo> = match response.json().await {
-        Ok(r) => r,
-        Err(e) => {
-            if let Ok(cached) = get_cached() {
-                return Ok(cached.repos);
+        let chunk: Vec<Repo> = match response.json().await {
+            Ok(r) => r,
+            Err(e) => {
+                if let Ok(cached) = get_cached() {
+                    return Ok(cached.repos);
+                }
+                return Err(format!("Parse error: {}", e));
             }
-            return Err(format!("Parse error: {}", e));
+        };
+
+        if chunk.is_empty() {
+            break;
         }
-    };
+        let chunk_len = chunk.len();
+        repos.extend(chunk);
+        if chunk_len < 100 {
+            break;
+        }
+    }
 
     // Merge screenshots from static fallback (API does not return them)
     let fallback = static_fallback();
@@ -181,6 +247,8 @@ pub async fn fetch_repos() -> Result<Vec<Repo>, String> {
             repo.screenshot = Some(screenshot.clone());
         }
     }
+
+    sort_repos_for_display(&mut repos);
 
     set_cache(&repos);
     Ok(repos)
@@ -212,11 +280,3 @@ fn set_cache(repos: &[Repo]) {
     let _ = LocalStorage::set(CACHE_KEY, cached);
 }
 
-/// Returns true if cache is older than CACHE_TTL_SECS.
-fn is_stale(fetched_at: u64) -> bool {
-    let now = SystemTime::now()
-        .duration_since(UNIX_EPOCH)
-        .unwrap()
-        .as_secs();
-    now.saturating_sub(fetched_at) > CACHE_TTL_SECS
-}

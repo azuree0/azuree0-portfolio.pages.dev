@@ -1,4 +1,5 @@
 use crate::models::Repo;
+use crate::prefetch::prefetch_navigation_url;
 use yew::prelude::*;
 
 const POEM: &str = r#"Beneath the wave, a different light,
@@ -11,11 +12,19 @@ pub struct RepoCardProps {
     pub repo: Repo,
     #[prop_or(false)]
     pub show_poem: bool,
+    /// First cards load images eagerly for LCP; rest use native lazy loading.
+    #[prop_or(true)]
+    pub image_lazy: bool,
 }
 
 /// Single repo card: screenshot (or header/desc), optional poem overlay, link to GitHub.
 #[function_component(RepoCard)]
 pub fn repo_card(props: &RepoCardProps) -> Html {
+    let prefetch_href = props.repo.html_url.clone();
+    let on_mouse_enter = Callback::from(move |_| {
+        prefetch_navigation_url(&prefetch_href);
+    });
+
     let lang_color = match props.repo.language.as_deref() {
         Some("Rust") => "var(--accent-cyan)",
         Some("C++") => "var(--accent-aqua)",
@@ -30,6 +39,7 @@ pub fn repo_card(props: &RepoCardProps) -> Html {
         } else {
             "repo-screenshot-wrap"
         };
+        let loading = if props.image_lazy { "lazy" } else { "eager" };
         html! {
             <div class={wrap_class}>
                 if props.show_poem {
@@ -41,7 +51,13 @@ pub fn repo_card(props: &RepoCardProps) -> Html {
                         </div>
                     </div>
                 }
-                <img src={img.clone()} alt={props.repo.name.clone()} class="repo-screenshot-full" />
+                <img
+                    src={img.clone()}
+                    alt={props.repo.name.clone()}
+                    class="repo-screenshot-full"
+                    loading={loading}
+                    decoding="async"
+                />
             </div>
         }
     });
@@ -52,6 +68,7 @@ pub fn repo_card(props: &RepoCardProps) -> Html {
             target="_blank"
             rel="noopener noreferrer"
             class="repo-card"
+            onmouseenter={on_mouse_enter.clone()}
         >
             if let Some(block) = screenshot_block {
                 {block}

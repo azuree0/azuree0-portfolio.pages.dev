@@ -437,6 +437,9 @@ body.is-touch {
   position: relative;
   overflow: visible;
   width: 100%;
+  /* Reserve space before images load to reduce CLS (fixed dimensions pattern) */
+  aspect-ratio: 16 / 9;
+  background: rgba(13, 27, 42, 0.5);
 }
 
 /* Poem overlay above screenshot (triggered by hero tagline hover) */

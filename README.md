@@ -60,6 +60,8 @@ git push -u origin main
 │ BROWSER                                                         │
 │ • Full-page WebGL2 canvas (underwater particles)                │
 │ • Yew UI overlay (hero, repo grid, footer)                      │
+│ • Perf: critical inline CSS, dns-prefetch, preload Three.js      │
+│ • Repo hover → link prefetch (GitHub); lazy images; CF cache     │
 └─────────────────────────────────────────────────────────────────┘
                                     ▼
 ┌─────────────────────────────────────────────────────────────────┐
@@ -90,13 +92,16 @@ portfolio/
 ├── deploy.ps1 # Build + deploy to Cloudflare (local)               (Config)
 ├── setup-github-secrets.ps1 # Add CLOUDFLARE_* secrets via gh CLI  (Config)
 ├── Trunk.toml # WASM build config                                  (Config)
-├── index.html # Entry HTML                                         (Config)
+├── index.html # Entry HTML + critical CSS + resource hints         (Config)
 ├── README.md # This file
+├── static/
+│   └── _headers # Cloudflare Pages cache + security headers        (Config)
 ├── styles/
 │   └── main.css # Underwater theme                                 (Frontend)
 └── src/
     ├── main.rs # Yew mount                                         (Backend)
     ├── lib.rs # Crate root                                         (Backend)
+    ├── prefetch.rs # link rel=prefetch on repo hover               (Frontend)
     ├── app.rs # Root App component                                 (Frontend)
     ├── scene.rs # WebGL2 underwater particle scene                 (Frontend)
     ├── components/

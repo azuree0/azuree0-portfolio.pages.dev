@@ -15,9 +15,10 @@ pub fn repo_grid(props: &RepoGridProps) -> Html {
         <section class="repo-grid">
             {props.repos.iter().enumerate().map(|(i, repo)| {
                 let show_poem = i == 0 && props.show_poem;
+                let image_lazy = i > 0;
                 html! {
                     <div key={repo.name.clone()} class="scroll-reveal">
-                        <RepoCard repo={repo.clone()} show_poem={show_poem} />
+                        <RepoCard repo={repo.clone()} show_poem={show_poem} image_lazy={image_lazy} />
                     </div>
                 }
             }).collect::<Html>()}
