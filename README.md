@@ -93,7 +93,7 @@ portfolio/
 ├── setup-github-secrets.ps1 # Add CLOUDFLARE_* secrets via gh CLI  (Config)
 ├── Trunk.toml # WASM build config                                  (Config)
 ├── index.html # Entry HTML + critical CSS + resource hints         (Config)
-├── README.md # This file
+├── README.md # Prior, diagrams, structure, SOP: Update site          (Config)
 ├── static/
 │   └── _headers # Cloudflare Pages cache + security headers        (Config)
 ├── styles/
