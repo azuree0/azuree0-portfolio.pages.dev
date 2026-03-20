@@ -114,3 +114,56 @@ portfolio/
     └── api/
         └── github.rs # GitHub API + cache                          (Backend)
 ```
+
+# SOP: Update site
+
+Steps to change the app and refresh production (Cloudflare Pages).
+
+**1. Edit and build (local, Windows / PowerShell, repo root)**
+
+- Change `src\`, `styles\`, `static\`, `index.html`, etc.
+
+**Build**
+
+```
+trunk build --release
+```
+
+**Run** (optional)
+
+```
+trunk serve
+```
+
+**2. Push GitHub**
+
+- **Repository** —                    https://github.com/azuree0/azuree0-portfolio.pages.dev
+
+```
+git add .
+git commit -m "Describe your change"
+git push origin main
+```
+
+**3. Deploy Cloudflare Pages**
+
+- Push to `main` runs **Deploy to Cloudflare Pages** automatically.
+- **Workflow (logs / Run workflow)** — https://github.com/azuree0/azuree0-portfolio.pages.dev/actions/workflows/deploy-cloudflare-pages.yml
+- Manual: **Actions** → **Deploy to Cloudflare Pages** → **Run workflow** → branch **main**.
+
+**4. Verify**
+
+- **Production** —                    https://azuree0-portfolio.pages.dev/
+- **Pages project** —                 https://dash.cloudflare.com/f1eeae10e7537ebbaef3bc34f93ab59d/pages/view/azuree0-portfolio
+
+**5. GitHub Actions secrets** (first-time setup or rotate token only)
+
+- **Repository secrets** —            https://github.com/azuree0/azuree0-portfolio.pages.dev/settings/secrets/actions
+- **Create API token** —              https://dash.cloudflare.com/profile/api-tokens
+  - Custom token: **Account** → **Cloudflare Pages** → **Edit**; **Account resources** = this account only.
+- **Secret names** (exact): `CLOUDFLARE_API_TOKEN` = paste token in **Secret** field; `CLOUDFLARE_ACCOUNT_ID` = paste **Account ID** (32-character hex from Cloudflare sidebar or from URL `https://dash.cloudflare.com/<Account_ID>/...`).
+
+**6. Deploy failed**
+
+- Open the failed job on the workflow URL in step 3; read the **Deploy to Cloudflare Pages** step log.
+- Revoke a leaked token at the API Tokens URL; add a new token; update only `CLOUDFLARE_API_TOKEN` in repository secrets.
