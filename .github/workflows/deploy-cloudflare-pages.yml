@@ -79,6 +79,12 @@ jobs:
       - name: Verify dist output
         run: test -f dist/index.html && ls -la dist/
 
+      # Compare with https://azuree0-portfolio.pages.dev/version.txt after deploy (must match this run’s SHA).
+      - name: Write deploy stamp to dist
+        run: |
+          echo "${{ github.sha }}" > dist/version.txt
+          echo "$(date -u -Iseconds)" >> dist/version.txt
+
       - name: Create Pages project (if not exists)
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
