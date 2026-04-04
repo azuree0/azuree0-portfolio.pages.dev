@@ -272,7 +272,7 @@ body.is-touch {
   color: var(--email-yellow);
 }
 
-/* "Copy email" on hover – normal font, light gold, gradient accent */
+/* "Copy email" on hover – normal font, light gold, same gradient effect as tagline */
 .hero-email-copy {
   font-family: 'Outfit', sans-serif;
   font-size: 0.95rem;
@@ -443,35 +443,29 @@ body.is-touch {
 }
 
 /* Icosahedron overlay above screenshot (triggered by hero tagline hover) */
-.repo-icosahedron-overlay {
+.icosahedron-overlay {
   position: absolute;
   inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.5rem;
+  padding: 0.75rem;
   background: var(--glass-bg);
   border-radius: 6px;
   box-shadow: var(--glow-cyan), 0 12px 40px rgba(0, 0, 0, 0.4);
   z-index: 10;
   pointer-events: none;
+  overflow: hidden;
 }
 
-.repo-icosahedron-host {
-  position: relative;
+.icosahedron-overlay-host {
   width: 100%;
   height: 100%;
   min-height: 120px;
 }
 
-.repo-icosahedron-host canvas {
-  display: block;
-  width: 100% !important;
-  height: 100% !important;
-}
-
-/* Hide screenshot temporarily when overlay is shown */
-.repo-screenshot-wrap.poem-visible .repo-screenshot-full {
+/* Hide screenshot temporarily when icosahedron is shown */
+.repo-screenshot-wrap.icosahedron-visible .repo-screenshot-full {
   visibility: hidden;
   opacity: 0;
 }

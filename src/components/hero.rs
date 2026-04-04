@@ -8,7 +8,7 @@ pub struct HeroProps {
     pub email: String,
 }
 
-/// Hero section: title, tagline, and copy-to-clipboard email button. Tagline hover triggers first-card overlay.
+/// Hero section: title, tagline, and copy-to-clipboard email button. Tagline hover triggers icosahedron on first repo card.
 #[function_component(Hero)]
 pub fn hero(props: &HeroProps) -> Html {
     let email_hovered = use_state(|| false);

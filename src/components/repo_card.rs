@@ -1,78 +1,24 @@
 use crate::models::Repo;
 use crate::prefetch::prefetch_navigation_url;
-use gloo_timers::callback::Timeout;
-use wasm_bindgen::prelude::*;
-use wasm_bindgen::JsCast;
 use yew::prelude::*;
 
 #[derive(Properties, PartialEq)]
 pub struct RepoCardProps {
     pub repo: Repo,
     #[prop_or(false)]
-    pub show_poem: bool,
+    pub show_icosahedron: bool,
     /// First cards load images eagerly for LCP; rest use native lazy loading.
     #[prop_or(true)]
     pub image_lazy: bool,
 }
 
-/// Calls global `portfolioInitIcosahedron` (Three.js) when the tagline overlay is shown.
-fn js_init_icosahedron() {
-    let Some(window) = web_sys::window() else {
-        return;
-    };
-    let Ok(js_val) = js_sys::Reflect::get(&window, &JsValue::from_str("portfolioInitIcosahedron")) else {
-        return;
-    };
-    if js_val.is_undefined() || js_val.is_null() {
-        return;
-    }
-    let Ok(f) = js_val.dyn_into::<js_sys::Function>() else {
-        return;
-    };
-    let _ = f.call0(&JsValue::NULL);
-}
-
-/// Calls global `portfolioDisposeIcosahedron` to tear down WebGL and RAF.
-fn js_dispose_icosahedron() {
-    let Some(window) = web_sys::window() else {
-        return;
-    };
-    let Ok(js_val) = js_sys::Reflect::get(&window, &JsValue::from_str("portfolioDisposeIcosahedron")) else {
-        return;
-    };
-    if js_val.is_undefined() || js_val.is_null() {
-        return;
-    }
-    let Ok(f) = js_val.dyn_into::<js_sys::Function>() else {
-        return;
-    };
-    let _ = f.call0(&JsValue::NULL);
-}
-
-/// Single repo card: screenshot (or header/desc), optional 3D icosahedron overlay on hover, link to GitHub.
+/// Single repo card: screenshot (or header/desc), optional icosahedron overlay (tagline hover), link to GitHub.
 #[function_component(RepoCard)]
 pub fn repo_card(props: &RepoCardProps) -> Html {
     let prefetch_href = props.repo.html_url.clone();
     let on_mouse_enter = Callback::from(move |_| {
         prefetch_navigation_url(&prefetch_href);
     });
-
-    {
-        let show_poem = props.show_poem;
-        use_effect_with(show_poem, move |show_poem| {
-            let pending = if *show_poem {
-                Some(Timeout::new(0, move || {
-                    js_init_icosahedron();
-                }))
-            } else {
-                None
-            };
-            move || {
-                drop(pending);
-                js_dispose_icosahedron();
-            }
-        });
-    }
 
     let lang_color = match props.repo.language.as_deref() {
         Some("Rust") => "var(--accent-cyan)",
@@ -83,17 +29,17 @@ pub fn repo_card(props: &RepoCardProps) -> Html {
     };
 
     let screenshot_block = props.repo.screenshot.as_ref().map(|img| {
-        let wrap_class = if props.show_poem {
-            "repo-screenshot-wrap poem-visible"
+        let wrap_class = if props.show_icosahedron {
+            "repo-screenshot-wrap icosahedron-visible"
         } else {
             "repo-screenshot-wrap"
         };
         let loading = if props.image_lazy { "lazy" } else { "eager" };
         html! {
             <div class={wrap_class}>
-                if props.show_poem {
-                    <div class="repo-icosahedron-overlay" aria-hidden="true">
-                        <div id="first-repo-icosahedron-host" class="repo-icosahedron-host"></div>
+                if props.show_icosahedron {
+                    <div class="icosahedron-overlay" aria-hidden="true">
+                        <div class="icosahedron-overlay-host"></div>
                     </div>
                 }
                 <img

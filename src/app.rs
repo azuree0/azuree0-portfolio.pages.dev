@@ -95,7 +95,7 @@ pub fn app() -> Html {
                         email={EMAIL.to_string()}
                     />
                     <main class="content">
-                        <RepoGrid repos={(*repos).clone()} show_poem={*tagline_hovered} />
+                        <RepoGrid repos={(*repos).clone()} show_icosahedron={*tagline_hovered} />
                     </main>
                 </div>
             </div>
