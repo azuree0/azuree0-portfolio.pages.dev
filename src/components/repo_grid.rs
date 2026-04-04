@@ -8,7 +8,7 @@ pub struct RepoGridProps {
     pub show_poem: bool,
 }
 
-/// Renders a grid of RepoCard components. First card shows poem overlay when show_poem is true.
+/// Renders a grid of RepoCard components. First card shows icosahedron overlay when show_poem is true.
 #[function_component(RepoGrid)]
 pub fn repo_grid(props: &RepoGridProps) -> Html {
     html! {

@@ -272,7 +272,7 @@ body.is-touch {
   color: var(--email-yellow);
 }
 
-/* "Copy email" on hover – normal font, light gold, same gradient effect as poem */
+/* "Copy email" on hover – normal font, light gold, gradient accent */
 .hero-email-copy {
   font-family: 'Outfit', sans-serif;
   font-size: 0.95rem;
@@ -442,14 +442,14 @@ body.is-touch {
   background: rgba(13, 27, 42, 0.5);
 }
 
-/* Poem overlay above screenshot (triggered by hero tagline hover) */
-.poem-over-screenshot {
+/* Icosahedron overlay above screenshot (triggered by hero tagline hover) */
+.repo-icosahedron-overlay {
   position: absolute;
   inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: 0.5rem;
   background: var(--glass-bg);
   border-radius: 6px;
   box-shadow: var(--glow-cyan), 0 12px 40px rgba(0, 0, 0, 0.4);
@@ -457,36 +457,20 @@ body.is-touch {
   pointer-events: none;
 }
 
-.poem-over-screenshot-content {
-  overflow: visible;
-  font-size: 1rem;
-  line-height: 1.6;
-  font-family: 'Outfit', sans-serif;
-  font-weight: 400;
-  background: linear-gradient(
-    135deg,
-    var(--accent-cyan) 0%,
-    var(--accent-aqua) 35%,
-    var(--accent-light) 70%,
-    var(--text-primary) 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 14px rgba(110, 212, 227, 0.8);
-  white-space: normal;
-  text-align: center;
+.repo-icosahedron-host {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 120px;
 }
 
-.poem-stanza {
-  margin: 0 0 0.35rem 0;
+.repo-icosahedron-host canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
 }
 
-.poem-stanza:last-child {
-  margin-bottom: 0;
-}
-
-/* Hide screenshot temporarily when poem is shown */
+/* Hide screenshot temporarily when overlay is shown */
 .repo-screenshot-wrap.poem-visible .repo-screenshot-full {
   visibility: hidden;
   opacity: 0;
