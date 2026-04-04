@@ -15,9 +15,10 @@ on:
 permissions:
   contents: read
 
+# New pushes cancel an in-flight deploy so the latest commit runs (no queue behind slow jobs).
 concurrency:
   group: cloudflare-pages-deploy
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 # Pin with Cargo.lock wasm-bindgen version (update when lockfile changes).
 env:
