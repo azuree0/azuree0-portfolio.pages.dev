@@ -8,9 +8,12 @@ const CACHE_KEY: &str = "portfolio_repos";
 /// Max GitHub API pages (100 repos each) to avoid unbounded requests.
 const MAX_REPO_PAGES: u32 = 10;
 
-/// Grid order: board games (Go → … → Mehen), then Rubik → 4D-cube → Bria-ai → Aerospace → SDC → Liquid.
-/// Repos not listed here sort after, by name.
+/// Grid order: C++ showcases first (Rubik, 4D-cube), then this portfolio repo, then board games and the rest.
+/// Repos not listed here sort after: **C++ (and C) before other languages**, then by name.
 const REPO_DISPLAY_ORDER: &[&str] = &[
+    "Rubik",
+    "4D-cube",
+    "azuree0-portfolio.pages.dev",
     "Go",
     "Latrones",
     "Game-of-Ur",
@@ -18,26 +21,42 @@ const REPO_DISPLAY_ORDER: &[&str] = &[
     "Nard",
     "Senet",
     "Mehen",
-    "Rubik",
-    "4D-cube",
     "Bria-ai",
     "Aerospace",
     "Silent-data-corruption",
     "Liquid",
 ];
 
-/// Stable sort so the grid matches `REPO_DISPLAY_ORDER`; unknown names follow, ordered by name.
+/// Priority for unknown repos: C++ and C before others (future-proof “feature C++ first”).
+fn language_sort_key(lang: Option<&str>) -> u8 {
+    match lang {
+        Some("C++") => 0,
+        Some("C") => 1,
+        _ => 2,
+    }
+}
+
+/// Stable sort: `REPO_DISPLAY_ORDER` first; unlisted repos use C/C++ before other languages, then name.
 fn sort_repos_for_display(repos: &mut Vec<Repo>) {
+    let unknown = REPO_DISPLAY_ORDER.len();
     repos.sort_by(|a, b| {
         let ia = REPO_DISPLAY_ORDER
             .iter()
             .position(|&n| n == a.name.as_str())
-            .unwrap_or(REPO_DISPLAY_ORDER.len());
+            .unwrap_or(unknown);
         let ib = REPO_DISPLAY_ORDER
             .iter()
             .position(|&n| n == b.name.as_str())
-            .unwrap_or(REPO_DISPLAY_ORDER.len());
-        ia.cmp(&ib).then_with(|| a.name.cmp(&b.name))
+            .unwrap_or(unknown);
+        ia.cmp(&ib).then_with(|| {
+            if ia == unknown && ib == unknown {
+                language_sort_key(a.language.as_deref())
+                    .cmp(&language_sort_key(b.language.as_deref()))
+                    .then_with(|| a.name.cmp(&b.name))
+            } else {
+                a.name.cmp(&b.name)
+            }
+        })
     });
 }
 
@@ -123,6 +142,15 @@ pub fn static_fallback() -> Vec<Repo> {
             stargazers_count: 1,
             updated_at: String::new(),
             screenshot: Some("https://github.com/user-attachments/assets/b9a324c1-822d-49ed-b88e-13fbc2b17f04".to_string()),
+        },
+        Repo {
+            name: "azuree0-portfolio.pages.dev".to_string(),
+            description: Some("This portfolio site: Yew + WASM, Cloudflare Pages.".to_string()),
+            html_url: format!("{}/azuree0-portfolio.pages.dev", base),
+            language: Some("Rust".to_string()),
+            stargazers_count: 0,
+            updated_at: String::new(),
+            screenshot: Some("https://azuree0-portfolio.pages.dev/og-image.png".to_string()),
         },
         Repo {
             name: "Rubik".to_string(),
