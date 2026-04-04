@@ -1,9 +1,9 @@
 # Build Yew/Trunk WASM and deploy to Cloudflare Pages (free).
 # Add GitHub secrets: CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID
 #
+# Fast CI: prebuilt Trunk binary + cargo-binstall for wasm-bindgen-cli (matches Cargo.lock 0.2.x).
 # If the live site stays stale: (1) Actions → this workflow → confirm last run is green.
-# (2) Cloudflare Pages → project → Settings → Builds: if Git integration is also building
-# this repo, disable it or align the build command so Actions remains the single deploy path.
+# (2) Cloudflare Pages → Settings → Builds: avoid duplicate Git builds overwriting Actions deploy.
 
 name: Deploy to Cloudflare Pages
 
@@ -18,6 +18,11 @@ permissions:
 concurrency:
   group: cloudflare-pages-deploy
   cancel-in-progress: false
+
+# Pin with Cargo.lock wasm-bindgen version (update when lockfile changes).
+env:
+  WASM_BINDGEN_CLI_VERSION: "0.2.108"
+  TRUNK_VERSION: "0.21.14"
 
 jobs:
   build-and-deploy:
@@ -34,9 +39,38 @@ jobs:
         with:
           targets: wasm32-unknown-unknown
 
-      # Match GitHub Pages workflow: trunk + wasm-bindgen-cli (required for WASM bindgen step).
-      - name: Install Trunk and wasm-bindgen-cli
-        run: cargo install trunk wasm-bindgen-cli
+      - name: Cache ~/.cargo/bin (wasm-bindgen-cli)
+        uses: actions/cache@v4
+        id: cache-cargo-bin
+        with:
+          path: |
+            ~/.cargo/bin
+            ~/.cargo/.crates.toml
+            ~/.cargo/.crates2.json
+          key: ${{ runner.os }}-cargo-bin-wasm-bindgen-${{ env.WASM_BINDGEN_CLI_VERSION }}-v2
+
+      - name: Install Trunk (prebuilt)
+        run: |
+          set -e
+          curl -sSL "https://github.com/trunk-rs/trunk/releases/download/v${TRUNK_VERSION}/trunk-x86_64-unknown-linux-gnu.tar.gz" | tar xz
+          sudo mv trunk /usr/local/bin/
+          trunk --version
+
+      - name: Install wasm-bindgen-cli (cargo-binstall or cache)
+        run: |
+          set -e
+          export PATH="$HOME/.cargo/bin:$PATH"
+          if [ -x "$HOME/.cargo/bin/wasm-bindgen" ]; then
+            echo "Using cached wasm-bindgen-cli"
+            wasm-bindgen --version
+            exit 0
+          fi
+          curl -L --proto '=https' --tlsv1.2 -sSf \
+            https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
+          export PATH="$HOME/.cargo/bin:$PATH"
+          cargo binstall wasm-bindgen-cli --version "${WASM_BINDGEN_CLI_VERSION}" --no-confirm \
+            || cargo install wasm-bindgen-cli --version "${WASM_BINDGEN_CLI_VERSION}" --locked
+          wasm-bindgen --version
 
       - name: Build
         run: trunk build --release --public-url /
