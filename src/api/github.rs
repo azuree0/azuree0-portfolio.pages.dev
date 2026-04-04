@@ -67,13 +67,16 @@ struct CachedRepos {
 }
 
 /// Instant paint: last successful fetch from localStorage, else hardcoded fallback.
+/// Always applies `sort_repos_for_display` so the first paint matches `REPO_DISPLAY_ORDER` (static fallback vec is unsorted).
 pub fn initial_repos() -> Vec<Repo> {
     if let Ok(cached) = get_cached() {
         let mut r = cached.repos;
         sort_repos_for_display(&mut r);
         return r;
     }
-    static_fallback()
+    let mut r = static_fallback();
+    sort_repos_for_display(&mut r);
+    r
 }
 
 /// Static fallback repos when API fails (azuree0's known repos)
@@ -286,7 +289,11 @@ pub async fn fetch_repos() -> Result<Vec<Repo>, String> {
 pub async fn fetch_repos_with_fallback() -> Vec<Repo> {
     match fetch_repos().await {
         Ok(repos) => repos,
-        Err(_) => static_fallback(),
+        Err(_) => {
+            let mut r = static_fallback();
+            sort_repos_for_display(&mut r);
+            r
+        }
     }
 }
 
