@@ -4,7 +4,8 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::time::{SystemTime, UNIX_EPOCH};
 
-const CACHE_KEY: &str = "portfolio_repos";
+/// Bump when client cache shape or sort semantics change (invalidates old localStorage).
+const CACHE_KEY: &str = "portfolio_repos_v2";
 /// Max GitHub API pages (100 repos each) to avoid unbounded requests.
 const MAX_REPO_PAGES: u32 = 10;
 

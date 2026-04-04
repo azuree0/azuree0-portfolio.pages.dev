@@ -1,21 +1,7 @@
-# Cloudflare Pages: long cache for hashed Trunk assets; short rollout for HTML.
-# https://developers.cloudflare.com/pages/configuration/headers/
-
-/*
-  X-Content-Type-Options: nosniff
-  Referrer-Policy: strict-origin-when-cross-origin
-
-/*.wasm
-  Cache-Control: public, max-age=31536000, immutable
-
-/*.js
-  Cache-Control: public, max-age=31536000, immutable
-
-/*.css
-  Cache-Control: public, max-age=31536000, immutable
+# Cloudflare Pages: avoid serving stale index.html after deploy (WASM hash changes in HTML).
+# Hashed *.wasm / assets keep long cache from Pages defaults.
+/
+  Cache-Control: public, max-age=0, must-revalidate
 
 /index.html
   Cache-Control: public, max-age=0, must-revalidate
-
-/version.txt
-  Cache-Control: public, max-age=60, must-revalidate
