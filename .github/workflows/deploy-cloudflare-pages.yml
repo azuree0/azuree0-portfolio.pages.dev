@@ -1,5 +1,9 @@
 # Build Yew/Trunk WASM and deploy to Cloudflare Pages (free).
 # Add GitHub secrets: CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID
+#
+# If the live site stays stale: (1) Actions → this workflow → confirm last run is green.
+# (2) Cloudflare Pages → project → Settings → Builds: if Git integration is also building
+# this repo, disable it or align the build command so Actions remains the single deploy path.
 
 name: Deploy to Cloudflare Pages
 
@@ -7,6 +11,13 @@ on:
   push:
     branches: [main, master]
   workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cloudflare-pages-deploy
+  cancel-in-progress: false
 
 jobs:
   build-and-deploy:
@@ -23,13 +34,15 @@ jobs:
         with:
           targets: wasm32-unknown-unknown
 
-      - name: Install Trunk
-        run: |
-          curl -sSL https://github.com/trunk-rs/trunk/releases/download/v0.21.14/trunk-x86_64-unknown-linux-gnu.tar.gz | tar xz
-          sudo mv trunk /usr/local/bin/
+      # Match GitHub Pages workflow: trunk + wasm-bindgen-cli (required for WASM bindgen step).
+      - name: Install Trunk and wasm-bindgen-cli
+        run: cargo install trunk wasm-bindgen-cli
 
       - name: Build
         run: trunk build --release --public-url /
+
+      - name: Verify dist output
+        run: test -f dist/index.html && ls -la dist/
 
       - name: Create Pages project (if not exists)
         env:
