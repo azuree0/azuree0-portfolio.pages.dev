@@ -9,12 +9,11 @@ const CACHE_KEY: &str = "portfolio_repos_v2";
 /// Max GitHub API pages (100 repos each) to avoid unbounded requests.
 const MAX_REPO_PAGES: u32 = 10;
 
-/// Grid order: C++ showcases first (Rubik, 4D-cube), then this portfolio repo, then board games and the rest.
+/// Grid order: C++ showcases first (Rubik, 4D-cube), then board games and the rest.
 /// Repos not listed here sort after: **C++ (and C) before other languages**, then by name.
 const REPO_DISPLAY_ORDER: &[&str] = &[
     "Rubik",
     "4D-cube",
-    "azuree0-portfolio.pages.dev",
     "Go",
     "Latrones",
     "Game-of-Ur",
@@ -61,6 +60,20 @@ fn sort_repos_for_display(repos: &mut Vec<Repo>) {
     });
 }
 
+/// Repo names omitted from the public grid (e.g. this site’s own repo).
+const HIDDEN_FROM_GRID: &[&str] = &["azuree0-portfolio.pages.dev"];
+
+fn filter_hidden_from_grid(repos: &mut Vec<Repo>) {
+    repos.retain(|r| !HIDDEN_FROM_GRID.contains(&r.name.as_str()));
+}
+
+/// Sort, then drop repos not shown on the portfolio grid.
+fn finalize_repos_for_display(mut repos: Vec<Repo>) -> Vec<Repo> {
+    sort_repos_for_display(&mut repos);
+    filter_hidden_from_grid(&mut repos);
+    repos
+}
+
 #[derive(Serialize, Deserialize)]
 struct CachedRepos {
     repos: Vec<Repo>,
@@ -68,16 +81,12 @@ struct CachedRepos {
 }
 
 /// Instant paint: last successful fetch from localStorage, else hardcoded fallback.
-/// Always applies `sort_repos_for_display` so the first paint matches `REPO_DISPLAY_ORDER` (static fallback vec is unsorted).
+/// Sorts, applies grid filters (e.g. hides this repo’s own GitHub project card).
 pub fn initial_repos() -> Vec<Repo> {
     if let Ok(cached) = get_cached() {
-        let mut r = cached.repos;
-        sort_repos_for_display(&mut r);
-        return r;
+        return finalize_repos_for_display(cached.repos);
     }
-    let mut r = static_fallback();
-    sort_repos_for_display(&mut r);
-    r
+    finalize_repos_for_display(static_fallback())
 }
 
 /// Static fallback repos when API fails (azuree0's known repos)
@@ -146,15 +155,6 @@ pub fn static_fallback() -> Vec<Repo> {
             stargazers_count: 1,
             updated_at: String::new(),
             screenshot: Some("https://github.com/user-attachments/assets/b9a324c1-822d-49ed-b88e-13fbc2b17f04".to_string()),
-        },
-        Repo {
-            name: "azuree0-portfolio.pages.dev".to_string(),
-            description: Some("This portfolio site: Yew + WASM, Cloudflare Pages.".to_string()),
-            html_url: format!("{}/azuree0-portfolio.pages.dev", base),
-            language: Some("Rust".to_string()),
-            stargazers_count: 0,
-            updated_at: String::new(),
-            screenshot: Some("https://azuree0-portfolio.pages.dev/og-image.png".to_string()),
         },
         Repo {
             name: "Rubik".to_string(),
@@ -235,7 +235,7 @@ pub async fn fetch_repos() -> Result<Vec<Repo>, String> {
             Ok(r) => r,
             Err(e) => {
                 if let Ok(cached) = get_cached() {
-                    return Ok(cached.repos);
+                    return Ok(finalize_repos_for_display(cached.repos));
                 }
                 return Err(format!("Network error: {}. Using fallback.", e));
             }
@@ -243,7 +243,7 @@ pub async fn fetch_repos() -> Result<Vec<Repo>, String> {
 
         if !response.ok() {
             if let Ok(cached) = get_cached() {
-                return Ok(cached.repos);
+                return Ok(finalize_repos_for_display(cached.repos));
             }
             return Err(format!("GitHub API error: {}", response.status()));
         }
@@ -252,7 +252,7 @@ pub async fn fetch_repos() -> Result<Vec<Repo>, String> {
             Ok(r) => r,
             Err(e) => {
                 if let Ok(cached) = get_cached() {
-                    return Ok(cached.repos);
+                    return Ok(finalize_repos_for_display(cached.repos));
                 }
                 return Err(format!("Parse error: {}", e));
             }
@@ -281,6 +281,7 @@ pub async fn fetch_repos() -> Result<Vec<Repo>, String> {
     }
 
     sort_repos_for_display(&mut repos);
+    filter_hidden_from_grid(&mut repos);
 
     set_cache(&repos);
     Ok(repos)
@@ -290,11 +291,7 @@ pub async fn fetch_repos() -> Result<Vec<Repo>, String> {
 pub async fn fetch_repos_with_fallback() -> Vec<Repo> {
     match fetch_repos().await {
         Ok(repos) => repos,
-        Err(_) => {
-            let mut r = static_fallback();
-            sort_repos_for_display(&mut r);
-            r
-        }
+        Err(_) => finalize_repos_for_display(static_fallback()),
     }
 }
 
