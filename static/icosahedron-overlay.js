@@ -31,26 +31,33 @@
 
     var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera(42, w / h, 0.1, 100);
-    camera.position.z = 2.4;
+    /* Pull camera back so the scaled mesh reads a bit smaller in frame */
+    camera.position.z = 2.5;
 
     var geo = new THREE.IcosahedronGeometry(1, 0);
+    /* Silver: high key vs shadow contrast (low ambient/emissive, strong specular) */
     var mat = new THREE.MeshPhongMaterial({
-      color: 0x0eacc7,
-      emissive: 0x062028,
-      shininess: 70,
+      color: 0xa8b0bc,
+      specular: 0xffffff,
+      emissive: 0x050608,
+      shininess: 100,
       flatShading: true,
       transparent: true,
-      opacity: 0.95,
+      opacity: 0.98,
     });
     var mesh = new THREE.Mesh(geo, mat);
+    mesh.scale.set(0.82, 0.82, 0.82);
     scene.add(mesh);
 
-    scene.add(new THREE.AmbientLight(0x6dd4e3, 0.55));
-    var dl = new THREE.DirectionalLight(0xffffff, 0.85);
-    dl.position.set(2.5, 4, 3);
+    scene.add(new THREE.AmbientLight(0xc8ccd8, 0.16));
+    var dl = new THREE.DirectionalLight(0xffffff, 1.35);
+    dl.position.set(2.8, 4.2, 3.2);
     scene.add(dl);
-    var back = new THREE.DirectionalLight(0x1d395e, 0.35);
-    back.position.set(-2, -1, -2);
+    var glint = new THREE.DirectionalLight(0xe8eeff, 0.32);
+    glint.position.set(-1.2, 2.5, 4);
+    scene.add(glint);
+    var back = new THREE.DirectionalLight(0x607080, 0.1);
+    back.position.set(-2.2, -1.2, -2);
     scene.add(back);
 
     var renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
@@ -76,8 +83,8 @@
         dispose(container);
         return;
       }
-      mesh.rotation.x += 0.007;
-      mesh.rotation.y += 0.011;
+      mesh.rotation.x += 0.0025;
+      mesh.rotation.y += 0.0038;
       renderer.render(scene, camera);
       st.raf = requestAnimationFrame(tick);
     }
