@@ -87,21 +87,7 @@ portfolio/
 
 # SOP
 
-**Repository**
-
-- **GitHub** —                    https://github.com/azuree0/azuree0-portfolio.pages.dev
-
-**Live and dashboards**
-
-- **Production** —                https://azuree0-portfolio.pages.dev/
-- **Cloudflare domains** —        https://dash.cloudflare.com/f1eeae10e7537ebbaef3bc34f93ab59d/home/domains
-- **Cloudflare Pages project** —  https://dash.cloudflare.com/f1eeae10e7537ebbaef3bc34f93ab59d/pages/view/azuree0-portfolio
-- **GitHub Actions workflow** —   https://github.com/azuree0/azuree0-portfolio.pages.dev/actions/workflows/deploy-cloudflare-pages.yml
-- **Repository secrets** —        https://github.com/azuree0/azuree0-portfolio.pages.dev/settings/secrets/actions
-- **Create API token** —          https://dash.cloudflare.com/profile/api-tokens
-
-
-**First-time: Git (optional, new clone)**
+**First-time: Git**
 
 ```
 git init
