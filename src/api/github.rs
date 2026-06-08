@@ -5,13 +5,16 @@ use std::collections::HashMap;
 use std::time::{SystemTime, UNIX_EPOCH};
 
 /// Bump when client cache shape or sort semantics change (invalidates old localStorage).
-const CACHE_KEY: &str = "portfolio_repos_v2";
+const CACHE_KEY: &str = "portfolio_repos_v3";
 /// Max GitHub API pages (100 repos each) to avoid unbounded requests.
 const MAX_REPO_PAGES: u32 = 10;
 
-/// Grid order: C++ showcases first (Rubik, 4D-cube), then board games and the rest.
+/// Grid order: newest C++ showcases first (Hexahedron, …), then Rubik / 4D-cube, board games, rest.
 /// Repos not listed here sort after: **C++ (and C) before other languages**, then by name.
 const REPO_DISPLAY_ORDER: &[&str] = &[
+    "Hexahedron",
+    "Tetrahedron",
+    "Octahedron",
     "Rubik",
     "4D-cube",
     "Go",
@@ -155,6 +158,48 @@ pub fn static_fallback() -> Vec<Repo> {
             stargazers_count: 1,
             updated_at: String::new(),
             screenshot: Some("https://github.com/user-attachments/assets/b9a324c1-822d-49ed-b88e-13fbc2b17f04".to_string()),
+        },
+        Repo {
+            name: "Hexahedron".to_string(),
+            description: Some(
+                "Cube puzzle: 6 faces, 6x6 stickers; uniform hue per face.".to_string(),
+            ),
+            html_url: format!("{}/Hexahedron", base),
+            language: Some("C++".to_string()),
+            stargazers_count: 0,
+            updated_at: String::new(),
+            screenshot: Some(
+                "https://github.com/user-attachments/assets/3f656e97-cb66-41db-bf0a-be252f75d8e6"
+                    .to_string(),
+            ),
+        },
+        Repo {
+            name: "Tetrahedron".to_string(),
+            description: Some(
+                "Tetrahedron puzzle: 4 faces, Pyraminx-style vertex turns.".to_string(),
+            ),
+            html_url: format!("{}/Tetrahedron", base),
+            language: Some("C++".to_string()),
+            stargazers_count: 0,
+            updated_at: String::new(),
+            screenshot: Some(
+                "https://github.com/user-attachments/assets/55eecb09-6e30-4eb4-9f25-d661b97983c1"
+                    .to_string(),
+            ),
+        },
+        Repo {
+            name: "Octahedron".to_string(),
+            description: Some(
+                "Octahedron puzzle: 8 triangular faces, 6x6 barycentric stickers.".to_string(),
+            ),
+            html_url: format!("{}/Octahedron", base),
+            language: Some("C++".to_string()),
+            stargazers_count: 0,
+            updated_at: String::new(),
+            screenshot: Some(
+                "https://github.com/user-attachments/assets/802f6950-a172-4426-876b-a2d8ca703fba"
+                    .to_string(),
+            ),
         },
         Repo {
             name: "Rubik".to_string(),
