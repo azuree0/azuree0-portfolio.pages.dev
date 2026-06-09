@@ -5,16 +5,16 @@ use std::collections::HashMap;
 use std::time::{SystemTime, UNIX_EPOCH};
 
 /// Bump when client cache shape or sort semantics change (invalidates old localStorage).
-const CACHE_KEY: &str = "portfolio_repos_v3";
+const CACHE_KEY: &str = "portfolio_repos_v5";
 /// Max GitHub API pages (100 repos each) to avoid unbounded requests.
 const MAX_REPO_PAGES: u32 = 10;
 
-/// Grid order: newest C++ showcases first (Hexahedron, …), then Rubik / 4D-cube, board games, rest.
+/// Grid order: Octahedron first, then other C++ showcases, Rubik / 4D-cube, board games, rest.
 /// Repos not listed here sort after: **C++ (and C) before other languages**, then by name.
 const REPO_DISPLAY_ORDER: &[&str] = &[
+    "Octahedron",
     "Hexahedron",
     "Tetrahedron",
-    "Octahedron",
     "Rubik",
     "4D-cube",
     "Go",
@@ -24,7 +24,8 @@ const REPO_DISPLAY_ORDER: &[&str] = &[
     "Nard",
     "Senet",
     "Mehen",
-    "Bria-ai",
+    "Tetris",
+    "Sudoku",
     "Aerospace",
     "Silent-data-corruption",
     "Liquid",
@@ -64,7 +65,7 @@ fn sort_repos_for_display(repos: &mut Vec<Repo>) {
 }
 
 /// Repo names omitted from the public grid (e.g. this site’s own repo).
-const HIDDEN_FROM_GRID: &[&str] = &["azuree0-portfolio.pages.dev"];
+const HIDDEN_FROM_GRID: &[&str] = &["azuree0-portfolio.pages.dev", "Bria-ai"];
 
 fn filter_hidden_from_grid(repos: &mut Vec<Repo>) {
     repos.retain(|r| !HIDDEN_FROM_GRID.contains(&r.name.as_str()));
@@ -223,13 +224,30 @@ pub fn static_fallback() -> Vec<Repo> {
             ),
         },
         Repo {
-            name: "Bria-ai".to_string(),
-            description: Some("Python AI project".to_string()),
-            html_url: format!("{}/Bria-ai", base),
-            language: Some("Python".to_string()),
+            name: "Tetris".to_string(),
+            description: Some("Electron + TypeScript Tetris (7-bag, wall kicks, scoring).".to_string()),
+            html_url: format!("{}/Tetris", base),
+            language: Some("TypeScript".to_string()),
             stargazers_count: 0,
             updated_at: String::new(),
-            screenshot: Some("https://github.com/user-attachments/assets/ed5d7f08-27a7-40fb-a93a-6f2b4b89cab4".to_string()),
+            screenshot: Some(
+                "https://github.com/user-attachments/assets/994cfac2-5ac1-4ff9-a3cb-d99c8baad3d6"
+                    .to_string(),
+            ),
+        },
+        Repo {
+            name: "Sudoku".to_string(),
+            description: Some(
+                "TriDoku: 81 triangular cells, prime symbols 2–23.".to_string(),
+            ),
+            html_url: format!("{}/Sudoku", base),
+            language: Some("TypeScript".to_string()),
+            stargazers_count: 0,
+            updated_at: String::new(),
+            screenshot: Some(
+                "https://github.com/user-attachments/assets/eb052be2-5a56-4123-9a40-87439656a368"
+                    .to_string(),
+            ),
         },
         Repo {
             name: "Aerospace".to_string(),
