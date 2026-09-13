@@ -1,0 +1,201 @@
+# Build Electron desktop installers for Windows, macOS, and Linux.
+# Artifacts: .exe (Squirrel), .dmg, .AppImage, .deb, .snap (Linux snap may require snapcraft on runner).
+#
+# Local dev: cd desktop && npm install && npm run start
+# Local installer (current OS): cd desktop && npm run make
+
+name: Desktop builds
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - "src/**"
+      - "styles/**"
+      - "static/**"
+      - "index.html"
+      - "Cargo.toml"
+      - "Cargo.lock"
+      - "Trunk.desktop.toml"
+      - "desktop/**"
+      - ".github/workflows/desktop.yml"
+  pull_request:
+    paths:
+      - "src/**"
+      - "styles/**"
+      - "static/**"
+      - "index.html"
+      - "Cargo.toml"
+      - "Cargo.lock"
+      - "Trunk.desktop.toml"
+      - "desktop/**"
+      - ".github/workflows/desktop.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  WASM_BINDGEN_CLI_VERSION: "0.2.108"
+  TRUNK_VERSION: "0.21.14"
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: portfolio-desktop
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - name: Install Trunk (prebuilt)
+        shell: bash
+        run: |
+          set -e
+          curl -sSL "https://github.com/trunk-rs/trunk/releases/download/v${TRUNK_VERSION}/trunk-x86_64-pc-windows-msvc.tar.gz" -o trunk.tar.gz
+          tar xzf trunk.tar.gz
+          mkdir -p "$HOME/.local/bin"
+          mv trunk.exe "$HOME/.local/bin/"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          trunk --version
+
+      - name: Install wasm-bindgen-cli
+        shell: bash
+        run: |
+          set -e
+          cargo install wasm-bindgen-cli --version "${WASM_BINDGEN_CLI_VERSION}" --locked
+          wasm-bindgen --version
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: desktop/package-lock.json
+
+      - name: Build desktop installer
+        env:
+          NO_COLOR: "false"
+        run: |
+          cd desktop
+          npm ci
+          npm run make
+
+      - name: Upload Windows artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: desktop-windows
+          path: desktop/out/make/**
+          if-no-files-found: error
+
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: portfolio-desktop
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - name: Install Trunk (prebuilt)
+        run: |
+          set -e
+          ARCH="$(uname -m)"
+          if [ "$ARCH" = "arm64" ]; then
+            TRUNK_ARCH="aarch64-apple-darwin"
+          else
+            TRUNK_ARCH="x86_64-apple-darwin"
+          fi
+          curl -sSL "https://github.com/trunk-rs/trunk/releases/download/v${TRUNK_VERSION}/trunk-${TRUNK_ARCH}.tar.gz" | tar xz
+          sudo mv trunk /usr/local/bin/
+          trunk --version
+
+      - name: Install wasm-bindgen-cli
+        run: |
+          set -e
+          cargo install wasm-bindgen-cli --version "${WASM_BINDGEN_CLI_VERSION}" --locked
+          wasm-bindgen --version
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: desktop/package-lock.json
+
+      - name: Build desktop installer
+        env:
+          NO_COLOR: "false"
+        run: |
+          cd desktop
+          npm ci
+          npm run make
+
+      - name: Upload macOS artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: desktop-macos
+          path: desktop/out/make/**
+          if-no-files-found: error
+
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: portfolio-desktop
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - name: Install Trunk (prebuilt)
+        run: |
+          set -e
+          curl -sSL "https://github.com/trunk-rs/trunk/releases/download/v${TRUNK_VERSION}/trunk-x86_64-unknown-linux-gnu.tar.gz" | tar xz
+          sudo mv trunk /usr/local/bin/
+          trunk --version
+
+      - name: Install wasm-bindgen-cli
+        run: |
+          set -e
+          cargo install wasm-bindgen-cli --version "${WASM_BINDGEN_CLI_VERSION}" --locked
+          wasm-bindgen --version
+
+      - uses: snapcore/action-setup@v1
+
+      - name: Install Linux packaging tools
+        run: sudo apt-get update && sudo apt-get install -y dpkg-dev fakeroot squashfs-tools
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: desktop/package-lock.json
+
+      - name: Build desktop installer
+        env:
+          NO_COLOR: "false"
+        run: |
+          cd desktop
+          npm ci
+          npm run make
+
+      - name: Upload Linux artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: desktop-linux
+          path: desktop/out/make/**
+          if-no-files-found: error

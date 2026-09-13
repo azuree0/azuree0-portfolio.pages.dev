@@ -21,15 +21,35 @@ trunk build --release
 trunk serve
 ```
 
+**Desktop** (Electron — online-only; CDN Three.js/fonts + GitHub API need network)
+
+- Node.js — https://nodejs.org/
+
+```
+cd desktop
+npm install
+npm run start
+```
+
+Local installer for the current OS:
+
+```
+cd desktop
+npm run make
+```
+
+Installers are written to `desktop/out/make/`. GitHub Actions **Desktop builds** workflow produces Windows `.exe`, macOS `.dmg`, and Linux `.AppImage` / `.deb` / `.snap` on push. Cached repos may still display from `localStorage` when offline.
+
 # Function
 
 ```text
 ┌─────────────────────────────────────────────────────────────────┐
-│ BROWSER                                                         │
+│ BROWSER / ELECTRON                                              │
 │ • Full-page WebGL2 canvas (underwater particles)                │
 │ • Yew UI overlay (hero, repo grid, footer)                      │
 │ • Perf: critical inline CSS, dns-prefetch, preload Three.js     │
 │ • Repo hover → link prefetch (GitHub); lazy images; CF cache    │
+│ • Desktop: Electron shell serves Trunk dist over localhost      │
 └─────────────────────────────────────────────────────────────────┘
                                     ▼
 ┌─────────────────────────────────────────────────────────────────┐
@@ -52,14 +72,21 @@ portfolio/
 ├── .github/
 │   └── workflows/
 │       ├── deploy.yml                  # GitHub Actions: deploy to GitHub Pages
-│       └── deploy-cloudflare-pages.yml # GitHub Actions: deploy to Cloudflare Pages
+│       ├── deploy-cloudflare-pages.yml # GitHub Actions: deploy to Cloudflare Pages
+│       └── desktop.yml                 # GitHub Actions: Electron installers (Win/Mac/Linux)
 ├── Cargo.toml                          # Rust project configuration
 ├── Dockerfile                          # Image for Render
 ├── nginx.conf                          # Static file serving
 ├── render.yaml                         # Render service definition
 ├── deploy.ps1                          # Local build + Cloudflare deploy
 ├── setup-github-secrets.ps1            # CLOUDFLARE_* secrets via gh CLI
-├── Trunk.toml                          # WASM build
+├── Trunk.toml                          # WASM build (web deploy, public_url /)
+├── Trunk.desktop.toml                  # WASM build for Electron (public_url ./)
+├── desktop/
+│   ├── package.json                    # Electron Forge scripts (start, make)
+│   ├── main.js                         # Main process + localhost static server
+│   ├── preload.js                      # Renderer preload (context isolation)
+│   └── forge.config.js                 # Packager + OS makers (.exe, .dmg, etc.)
 ├── index.html                          # Entry HTML, critical CSS, hints
 ├── README.md
 ├── static/
