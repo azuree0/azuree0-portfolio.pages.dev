@@ -1,7 +1,0 @@
-# Cloudflare Pages: avoid serving stale index.html after deploy (WASM hash changes in HTML).
-# Hashed *.wasm / assets keep long cache from Pages defaults.
-/
-  Cache-Control: public, max-age=0, must-revalidate
-
-/index.html
-  Cache-Control: public, max-age=0, must-revalidate

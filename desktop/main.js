@@ -3,6 +3,35 @@ const fs = require("fs");
 const http = require("http");
 const path = require("path");
 
+function hasLinuxGpuDevice() {
+  if (process.platform !== "linux") {
+    return true;
+  }
+  return (
+    fs.existsSync("/dev/dri/renderD128") ||
+    fs.existsSync("/dev/dri/card0")
+  );
+}
+
+function configureGraphics() {
+  // Chromium removed automatic software WebGL fallback; opt in for headless/VM GPUs.
+  app.commandLine.appendSwitch("enable-unsafe-swiftshader");
+
+  if (process.platform === "linux") {
+    app.commandLine.appendSwitch("disable-dev-shm-usage");
+  }
+
+  const forceSoftware =
+    process.env.PORTFOLIO_SOFTWARE_GL === "1" ||
+    (process.platform === "linux" && !hasLinuxGpuDevice());
+
+  if (forceSoftware) {
+    app.disableHardwareAcceleration();
+  }
+}
+
+configureGraphics();
+
 /** @type {import("http").Server | null} */
 let server = null;
 
