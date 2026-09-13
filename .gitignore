@@ -23,3 +23,8 @@ Thumbs.db
 
 # Wrangler local cache
 .wrangler/
+
+# Electron desktop
+desktop/node_modules/
+desktop/out/
+desktop/.webpack/
