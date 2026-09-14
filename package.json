@@ -1,0 +1,40 @@
+{
+  "name": "azure-portfolio",
+  "version": "0.1.0",
+  "description": "Azure portfolio desktop app (Trunk/Yew + Electron)",
+  "main": "backend/Main.js",
+  "author": "Azure",
+  "license": "MIT",
+  "scripts": {
+    "build:electron": "tsc -p tsconfig.node.json",
+    "typecheck:electron": "tsc -p tsconfig.node.json --noEmit",
+    "build:wasm": "cross-env NO_COLOR=false trunk build --release --public-url ./",
+    "start": "npm run build:electron && npm run build:wasm && electron-forge start",
+    "package": "npm run build:electron && npm run build:wasm && electron-forge package",
+    "make": "npm run build:electron && npm run build:wasm && electron-forge make",
+    "make:linux-test": "bash scripts/make-linux-test.sh",
+    "run:linux-appimage": "bash scripts/run-linux-appimage.sh",
+    "publish": "npm run build:electron && npm run build:wasm && electron-forge publish"
+  },
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.1"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "7.11.2",
+    "@electron-forge/maker-deb": "7.11.2",
+    "@electron-forge/maker-dmg": "7.11.2",
+    "@electron-forge/maker-rpm": "7.11.2",
+    "@electron-forge/maker-snap": "7.11.2",
+    "@electron-forge/maker-squirrel": "7.11.2",
+    "@electron-forge/maker-zip": "7.11.2",
+    "@electron-forge/plugin-auto-unpack-natives": "7.11.2",
+    "@electron-forge/plugin-fuses": "7.11.2",
+    "@electron-forge/publisher-github": "7.11.2",
+    "@electron/fuses": "^1.8.0",
+    "@reforged/maker-appimage": "^5.2.0",
+    "cross-env": "^7.0.3",
+    "electron": "^44.0.0",
+    "typescript": "^5.7.3",
+    "@types/node": "^22.13.10"
+  }
+}

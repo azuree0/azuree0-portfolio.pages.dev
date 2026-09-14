@@ -1,0 +1,13 @@
+/out
+/target
+/.git
+/dist
+/node_modules
+/.github
+/debug
+/src
+/static
+/styles
+/emsdk
+/.wrangler
+/.cursor

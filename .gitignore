@@ -5,6 +5,13 @@
 # Trunk / WASM build output
 /dist/
 
+# Electron / Node
+/node_modules/
+/out/
+/linux-test-artifacts/
+/backend/Main.js
+/backend/Preload.js
+
 # Emscripten SDK
 /emsdk/
 

@@ -13,6 +13,7 @@ dist/** linguist-generated
 *.yml linguist-language=YAML
 *.yaml linguist-language=YAML
 *.sh linguist-language=Shell
+*.sh text eol=lf
 *.ps1 linguist-language=PowerShell
 Dockerfile linguist-language=Dockerfile
 *.conf linguist-language=ApacheConf
