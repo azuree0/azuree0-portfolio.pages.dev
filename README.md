@@ -162,6 +162,12 @@ portfolio/
 
 # SOP
 
+- **GitHub repository** — [https://github.com/azuree0/azuree0-portfolio.pages.dev](https://github.com/azuree0/azuree0-portfolio.pages.dev)
+- **Cloudflare Pages dashboard** — [https://dash.cloudflare.com/f1eeae10e7537ebbaef3bc34f93ab59d/pages/view/azuree0-portfolio](https://dash.cloudflare.com/f1eeae10e7537ebbaef3bc34f93ab59d/pages/view/azuree0-portfolio)
+- **Cursor codebase** — [https://cursor.com/codebase/azure-dev](https://cursor.com/codebase/azure-dev)
+- **Deploy workflow (Actions)** — [Deploy to Cloudflare Pages](https://github.com/azuree0/azuree0-portfolio.pages.dev/actions/workflows/deploy-cloudflare-pages.yml)
+- **Production site** — [https://azuree0-portfolio.pages.dev/](https://azuree0-portfolio.pages.dev/)
+
 **First-time: Git**
 
 ```
@@ -170,7 +176,7 @@ git add .
 git commit -m "Add Render deployment"
 git config --global user.email "your-email@example.com"
 git config --global user.name "Your Name"
-git remote add origin https://github.com/yourusername/portfolio.git
+git remote add origin https://github.com/azuree0/azuree0-portfolio.pages.dev.git
 git branch -M main
 git push -u origin main
 ```
@@ -213,7 +219,7 @@ git push origin main
 ```
 
 1. Deploy: push to `main` runs **Deploy to Cloudflare Pages** automatically. Manual: **Actions** → **Deploy to Cloudflare Pages** → **Run workflow** → branch **main**.
-2. Verify production URL and Pages dashboard (links above).
+2. Verify [production site](https://azuree0-portfolio.pages.dev/) and [Cloudflare Pages dashboard](https://dash.cloudflare.com/f1eeae10e7537ebbaef3bc34f93ab59d/pages/view/azuree0-portfolio).
 
 **Desktop release (GitHub Releases)**
 
@@ -232,10 +238,10 @@ git push origin v0.1.0
 **Secrets (first-time or rotate token only)**
 
 - Custom token: **Account** → **Cloudflare Pages** → **Edit**; **Account resources** = this account only.
-- **Secret names** (exact): `CLOUDFLARE_API_TOKEN` = paste token in **Secret** field; `CLOUDFLARE_ACCOUNT_ID` = paste **Account ID** (32-character hex from Cloudflare sidebar or from URL `https://dash.cloudflare.com/<Account_ID>/...`).
+- **Secret names** (exact): `CLOUDFLARE_API_TOKEN` = paste token in **Secret** field; `CLOUDFLARE_ACCOUNT_ID` = `f1eeae10e7537ebbaef3bc34f93ab59d` (also visible in the [Cloudflare Pages dashboard](https://dash.cloudflare.com/f1eeae10e7537ebbaef3bc34f93ab59d/pages/view/azuree0-portfolio) URL).
 
 **Deploy failed**
 
-- Open the failed job on the workflow URL above; read the **Deploy to Cloudflare Pages** step log.
+- Open the failed job on [Deploy to Cloudflare Pages](https://github.com/azuree0/azuree0-portfolio.pages.dev/actions/workflows/deploy-cloudflare-pages.yml); read the **Deploy to Cloudflare Pages** step log.
 - Revoke a leaked token at the API Tokens URL; add a new token; update only `CLOUDFLARE_API_TOKEN` in repository secrets.
 

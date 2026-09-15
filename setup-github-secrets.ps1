@@ -8,7 +8,7 @@ param(
     [Parameter(Mandatory=$true)][string]$ApiToken
 )
 
-$repo = "azuree0/Portfolio"
+$repo = "azuree0/azuree0-portfolio.pages.dev"
 
 Write-Host "Setting GitHub secrets for $repo..." -ForegroundColor Cyan
 gh secret set CLOUDFLARE_ACCOUNT_ID --body $AccountId --repo $repo

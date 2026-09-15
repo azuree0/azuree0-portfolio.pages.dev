@@ -2,8 +2,8 @@
 @name         Hide GitHub Deployments row
 @namespace    github.com
 @version      1.0
-@description Hide the Deployments row in repo sidebar (azuree0/Portfolio)
-@match       https://github.com/azuree0/Portfolio*
+@description Hide the Deployments row in repo sidebar (azuree0/azuree0-portfolio.pages.dev)
+@match       https://github.com/azuree0/azuree0-portfolio.pages.dev*
 ==/UserStyle== */
 
 /* Hide Deployments row on repo sidebar */
